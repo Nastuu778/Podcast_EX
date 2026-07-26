@@ -1,0 +1,3 @@
+C:\Qt\Tools\CMake_64\bin\cmake.exe -E rm -f CMakeFiles\Podcast.dir/objects.a
+C:\Qt\Tools\mingw1310_64\bin\ar.exe qc CMakeFiles\Podcast.dir/objects.a @CMakeFiles\Podcast.dir\objects1.rsp
+C:\Qt\Tools\mingw1310_64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Podcast.dir/objects.a -Wl,--no-whole-archive -o Podcast.exe -Wl,--out-implib,libPodcast.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Podcast.dir\linkLibs.rsp
