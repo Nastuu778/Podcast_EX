@@ -68,10 +68,33 @@ include CMakeFiles/Podcast.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Podcast.dir/flags.make
 
+Podcast_autogen/timestamp: C:/Qt/6.11.1/mingw_64/bin/moc.exe
+Podcast_autogen/timestamp: C:/Qt/6.11.1/mingw_64/bin/uic.exe
+Podcast_autogen/timestamp: CMakeFiles/Podcast.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target Podcast"
+	C:\Qt\Tools\CMake_64\bin\cmake.exe -E cmake_autogen C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/Podcast_autogen.dir/AutogenInfo.json Debug
+	C:\Qt\Tools\CMake_64\bin\cmake.exe -E touch C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/Podcast_autogen/timestamp
+
+CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj: CMakeFiles/Podcast.dir/flags.make
+CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
+CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj: Podcast_autogen/mocs_compilation.cpp
+CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj -MF CMakeFiles\Podcast.dir\Podcast_autogen\mocs_compilation.cpp.obj.d -o CMakeFiles\Podcast.dir\Podcast_autogen\mocs_compilation.cpp.obj -c C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\Podcast_autogen\mocs_compilation.cpp
+
+CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\Podcast_autogen\mocs_compilation.cpp > CMakeFiles\Podcast.dir\Podcast_autogen\mocs_compilation.cpp.i
+
+CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\Podcast_autogen\mocs_compilation.cpp -o CMakeFiles\Podcast.dir\Podcast_autogen\mocs_compilation.cpp.s
+
 CMakeFiles/Podcast.dir/main.cpp.obj: CMakeFiles/Podcast.dir/flags.make
+CMakeFiles/Podcast.dir/main.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
 CMakeFiles/Podcast.dir/main.cpp.obj: C:/Dev/Podcast/main.cpp
 CMakeFiles/Podcast.dir/main.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Podcast.dir/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Podcast.dir/main.cpp.obj"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/main.cpp.obj -MF CMakeFiles\Podcast.dir\main.cpp.obj.d -o CMakeFiles\Podcast.dir\main.cpp.obj -c C:\Dev\Podcast\main.cpp
 
 CMakeFiles/Podcast.dir/main.cpp.i: cmake_force
@@ -82,19 +105,43 @@ CMakeFiles/Podcast.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/main.cpp.s"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\main.cpp -o CMakeFiles\Podcast.dir\main.cpp.s
 
+CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: CMakeFiles/Podcast.dir/flags.make
+CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
+CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: C:/Dev/Podcast/network/tcpserver.cpp
+CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj -MF CMakeFiles\Podcast.dir\network\tcpserver.cpp.obj.d -o CMakeFiles\Podcast.dir\network\tcpserver.cpp.obj -c C:\Dev\Podcast\network\tcpserver.cpp
+
+CMakeFiles/Podcast.dir/network/tcpserver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Podcast.dir/network/tcpserver.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Dev\Podcast\network\tcpserver.cpp > CMakeFiles\Podcast.dir\network\tcpserver.cpp.i
+
+CMakeFiles/Podcast.dir/network/tcpserver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/network/tcpserver.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\network\tcpserver.cpp -o CMakeFiles\Podcast.dir\network\tcpserver.cpp.s
+
 # Object files for target Podcast
 Podcast_OBJECTS = \
-"CMakeFiles/Podcast.dir/main.cpp.obj"
+"CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj" \
+"CMakeFiles/Podcast.dir/main.cpp.obj" \
+"CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj"
 
 # External object files for target Podcast
 Podcast_EXTERNAL_OBJECTS =
 
+Podcast.exe: CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj
 Podcast.exe: CMakeFiles/Podcast.dir/main.cpp.obj
+Podcast.exe: CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj
 Podcast.exe: CMakeFiles/Podcast.dir/build.make
+Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Widgets.a
+Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Multimedia.a
+Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Network.a
+Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Gui.a
+Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Core.a
 Podcast.exe: CMakeFiles/Podcast.dir/linkLibs.rsp
 Podcast.exe: CMakeFiles/Podcast.dir/objects1.rsp
 Podcast.exe: CMakeFiles/Podcast.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Podcast.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Podcast.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Podcast.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -105,7 +152,7 @@ CMakeFiles/Podcast.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles\Podcast.dir\cmake_clean.cmake
 .PHONY : CMakeFiles/Podcast.dir/clean
 
-CMakeFiles/Podcast.dir/depend:
+CMakeFiles/Podcast.dir/depend: Podcast_autogen/timestamp
 	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Dev\Podcast C:\Dev\Podcast C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles\Podcast.dir\DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/Podcast.dir/depend
 

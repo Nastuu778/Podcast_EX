@@ -1,9 +1,14 @@
-#include <iostream>
+#include <QApplication>
+#include "network/tcpserver.h"
 
-using namespace std;
-
-int main()
+int main(int argc, char *argv[])
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    QApplication app(argc, argv);
+
+    TcpServer server;
+    if (server.start(5000)) {
+        qDebug() << "Podcast server is running on port 5000";
+    }
+
+    return app.exec();
 }

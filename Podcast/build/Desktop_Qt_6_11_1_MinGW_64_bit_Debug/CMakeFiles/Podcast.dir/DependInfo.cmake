@@ -8,7 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "" "Podcast_autogen/timestamp" "custom" "Podcast_autogen/deps"
+  "C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/Podcast_autogen/mocs_compilation.cpp" "CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj.d"
   "C:/Dev/Podcast/main.cpp" "CMakeFiles/Podcast.dir/main.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/main.cpp.obj.d"
+  "C:/Dev/Podcast/network/tcpserver.cpp" "CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -84,51 +84,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	C:\Qt\Tools\CMake_64\bin\cmake.exe -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\\CMakeFiles\progress.marks
@@ -173,6 +128,56 @@ Podcast/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/build
 .PHONY : Podcast/fast
 
+#=============================================================================
+# Target rules for targets named Podcast_autogen_timestamp_deps
+
+# Build rule for target.
+Podcast_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Podcast_autogen_timestamp_deps
+.PHONY : Podcast_autogen_timestamp_deps
+
+# fast build rule for target.
+Podcast_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen_timestamp_deps.dir\build.make CMakeFiles/Podcast_autogen_timestamp_deps.dir/build
+.PHONY : Podcast_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named Podcast_autogen
+
+# Build rule for target.
+Podcast_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Podcast_autogen
+.PHONY : Podcast_autogen
+
+# fast build rule for target.
+Podcast_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen.dir\build.make CMakeFiles/Podcast_autogen.dir/build
+.PHONY : Podcast_autogen/fast
+
+Podcast_autogen/mocs_compilation.obj: Podcast_autogen/mocs_compilation.cpp.obj
+.PHONY : Podcast_autogen/mocs_compilation.obj
+
+# target to build an object file
+Podcast_autogen/mocs_compilation.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj
+.PHONY : Podcast_autogen/mocs_compilation.cpp.obj
+
+Podcast_autogen/mocs_compilation.i: Podcast_autogen/mocs_compilation.cpp.i
+.PHONY : Podcast_autogen/mocs_compilation.i
+
+# target to preprocess a source file
+Podcast_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.i
+.PHONY : Podcast_autogen/mocs_compilation.cpp.i
+
+Podcast_autogen/mocs_compilation.s: Podcast_autogen/mocs_compilation.cpp.s
+.PHONY : Podcast_autogen/mocs_compilation.s
+
+# target to generate assembly for a file
+Podcast_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.s
+.PHONY : Podcast_autogen/mocs_compilation.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -197,6 +202,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+network/tcpserver.obj: network/tcpserver.cpp.obj
+.PHONY : network/tcpserver.obj
+
+# target to build an object file
+network/tcpserver.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj
+.PHONY : network/tcpserver.cpp.obj
+
+network/tcpserver.i: network/tcpserver.cpp.i
+.PHONY : network/tcpserver.i
+
+# target to preprocess a source file
+network/tcpserver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.i
+.PHONY : network/tcpserver.cpp.i
+
+network/tcpserver.s: network/tcpserver.cpp.s
+.PHONY : network/tcpserver.s
+
+# target to generate assembly for a file
+network/tcpserver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.s
+.PHONY : network/tcpserver.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -204,15 +233,19 @@ help:
 	@echo ... clean
 	@echo ... depend
 	@echo ... edit_cache
-	@echo ... install
-	@echo ... install/local
-	@echo ... install/strip
-	@echo ... list_install_components
 	@echo ... rebuild_cache
+	@echo ... Podcast_autogen
+	@echo ... Podcast_autogen_timestamp_deps
 	@echo ... Podcast
+	@echo ... Podcast_autogen/mocs_compilation.obj
+	@echo ... Podcast_autogen/mocs_compilation.i
+	@echo ... Podcast_autogen/mocs_compilation.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... network/tcpserver.obj
+	@echo ... network/tcpserver.i
+	@echo ... network/tcpserver.s
 .PHONY : help
 
 

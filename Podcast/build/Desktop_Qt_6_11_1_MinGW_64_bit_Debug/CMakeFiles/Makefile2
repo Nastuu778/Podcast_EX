@@ -71,21 +71,24 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/Podcast.dir/clean
+clean: CMakeFiles/Podcast_autogen_timestamp_deps.dir/clean
+clean: CMakeFiles/Podcast_autogen.dir/clean
 .PHONY : clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Podcast.dir
 
 # All Build rule for target.
-CMakeFiles/Podcast.dir/all:
+CMakeFiles/Podcast.dir/all: CMakeFiles/Podcast_autogen.dir/all
+CMakeFiles/Podcast.dir/all: CMakeFiles/Podcast_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=1,2 "Built target Podcast"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target Podcast"
 .PHONY : CMakeFiles/Podcast.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Podcast.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Podcast.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 0
 .PHONY : CMakeFiles/Podcast.dir/rule
@@ -98,6 +101,58 @@ Podcast: CMakeFiles/Podcast.dir/rule
 CMakeFiles/Podcast.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/clean
 .PHONY : CMakeFiles/Podcast.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/Podcast_autogen_timestamp_deps.dir
+
+# All Build rule for target.
+CMakeFiles/Podcast_autogen_timestamp_deps.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen_timestamp_deps.dir\build.make CMakeFiles/Podcast_autogen_timestamp_deps.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen_timestamp_deps.dir\build.make CMakeFiles/Podcast_autogen_timestamp_deps.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num= "Built target Podcast_autogen_timestamp_deps"
+.PHONY : CMakeFiles/Podcast_autogen_timestamp_deps.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/Podcast_autogen_timestamp_deps.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Podcast_autogen_timestamp_deps.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 0
+.PHONY : CMakeFiles/Podcast_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+Podcast_autogen_timestamp_deps: CMakeFiles/Podcast_autogen_timestamp_deps.dir/rule
+.PHONY : Podcast_autogen_timestamp_deps
+
+# clean rule for target.
+CMakeFiles/Podcast_autogen_timestamp_deps.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen_timestamp_deps.dir\build.make CMakeFiles/Podcast_autogen_timestamp_deps.dir/clean
+.PHONY : CMakeFiles/Podcast_autogen_timestamp_deps.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/Podcast_autogen.dir
+
+# All Build rule for target.
+CMakeFiles/Podcast_autogen.dir/all: CMakeFiles/Podcast_autogen_timestamp_deps.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen.dir\build.make CMakeFiles/Podcast_autogen.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen.dir\build.make CMakeFiles/Podcast_autogen.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=6 "Built target Podcast_autogen"
+.PHONY : CMakeFiles/Podcast_autogen.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/Podcast_autogen.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 1
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Podcast_autogen.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles 0
+.PHONY : CMakeFiles/Podcast_autogen.dir/rule
+
+# Convenience name for target.
+Podcast_autogen: CMakeFiles/Podcast_autogen.dir/rule
+.PHONY : Podcast_autogen
+
+# clean rule for target.
+CMakeFiles/Podcast_autogen.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen.dir\build.make CMakeFiles/Podcast_autogen.dir/clean
+.PHONY : CMakeFiles/Podcast_autogen.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
