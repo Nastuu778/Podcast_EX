@@ -90,26 +90,11 @@ CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.s"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\Podcast_autogen\mocs_compilation.cpp -o CMakeFiles\Podcast.dir\Podcast_autogen\mocs_compilation.cpp.s
 
-CMakeFiles/Podcast.dir/main.cpp.obj: CMakeFiles/Podcast.dir/flags.make
-CMakeFiles/Podcast.dir/main.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
-CMakeFiles/Podcast.dir/main.cpp.obj: C:/Dev/Podcast/main.cpp
-CMakeFiles/Podcast.dir/main.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Podcast.dir/main.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/main.cpp.obj -MF CMakeFiles\Podcast.dir\main.cpp.obj.d -o CMakeFiles\Podcast.dir\main.cpp.obj -c C:\Dev\Podcast\main.cpp
-
-CMakeFiles/Podcast.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Podcast.dir/main.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Dev\Podcast\main.cpp > CMakeFiles\Podcast.dir\main.cpp.i
-
-CMakeFiles/Podcast.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/main.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\main.cpp -o CMakeFiles\Podcast.dir\main.cpp.s
-
 CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: CMakeFiles/Podcast.dir/flags.make
 CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
 CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: C:/Dev/Podcast/network/tcpserver.cpp
 CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj -MF CMakeFiles\Podcast.dir\network\tcpserver.cpp.obj.d -o CMakeFiles\Podcast.dir\network\tcpserver.cpp.obj -c C:\Dev\Podcast\network\tcpserver.cpp
 
 CMakeFiles/Podcast.dir/network/tcpserver.cpp.i: cmake_force
@@ -124,7 +109,7 @@ CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj: CMakeFiles/Podcast.dir/flags.m
 CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
 CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj: C:/Dev/Podcast/network/tcpclient.cpp
 CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj -MF CMakeFiles\Podcast.dir\network\tcpclient.cpp.obj.d -o CMakeFiles\Podcast.dir\network\tcpclient.cpp.obj -c C:\Dev\Podcast\network\tcpclient.cpp
 
 CMakeFiles/Podcast.dir/network/tcpclient.cpp.i: cmake_force
@@ -139,7 +124,7 @@ CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj: CMakeFiles/Podcast.dir/flags.make
 CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
 CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj: C:/Dev/Podcast/ui/mainwindow.cpp
 CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj -MF CMakeFiles\Podcast.dir\ui\mainwindow.cpp.obj.d -o CMakeFiles\Podcast.dir\ui\mainwindow.cpp.obj -c C:\Dev\Podcast\ui\mainwindow.cpp
 
 CMakeFiles/Podcast.dir/ui/mainwindow.cpp.i: cmake_force
@@ -150,22 +135,54 @@ CMakeFiles/Podcast.dir/ui/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/ui/mainwindow.cpp.s"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\ui\mainwindow.cpp -o CMakeFiles\Podcast.dir\ui\mainwindow.cpp.s
 
+CMakeFiles/Podcast.dir/server_main.cpp.obj: CMakeFiles/Podcast.dir/flags.make
+CMakeFiles/Podcast.dir/server_main.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
+CMakeFiles/Podcast.dir/server_main.cpp.obj: C:/Dev/Podcast/server_main.cpp
+CMakeFiles/Podcast.dir/server_main.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Podcast.dir/server_main.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/server_main.cpp.obj -MF CMakeFiles\Podcast.dir\server_main.cpp.obj.d -o CMakeFiles\Podcast.dir\server_main.cpp.obj -c C:\Dev\Podcast\server_main.cpp
+
+CMakeFiles/Podcast.dir/server_main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Podcast.dir/server_main.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Dev\Podcast\server_main.cpp > CMakeFiles\Podcast.dir\server_main.cpp.i
+
+CMakeFiles/Podcast.dir/server_main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/server_main.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\server_main.cpp -o CMakeFiles\Podcast.dir\server_main.cpp.s
+
+CMakeFiles/Podcast.dir/client_main.cpp.obj: CMakeFiles/Podcast.dir/flags.make
+CMakeFiles/Podcast.dir/client_main.cpp.obj: CMakeFiles/Podcast.dir/includes_CXX.rsp
+CMakeFiles/Podcast.dir/client_main.cpp.obj: C:/Dev/Podcast/client_main.cpp
+CMakeFiles/Podcast.dir/client_main.cpp.obj: CMakeFiles/Podcast.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Podcast.dir/client_main.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Podcast.dir/client_main.cpp.obj -MF CMakeFiles\Podcast.dir\client_main.cpp.obj.d -o CMakeFiles\Podcast.dir\client_main.cpp.obj -c C:\Dev\Podcast\client_main.cpp
+
+CMakeFiles/Podcast.dir/client_main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Podcast.dir/client_main.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Dev\Podcast\client_main.cpp > CMakeFiles\Podcast.dir\client_main.cpp.i
+
+CMakeFiles/Podcast.dir/client_main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Podcast.dir/client_main.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Dev\Podcast\client_main.cpp -o CMakeFiles\Podcast.dir\client_main.cpp.s
+
 # Object files for target Podcast
 Podcast_OBJECTS = \
 "CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj" \
-"CMakeFiles/Podcast.dir/main.cpp.obj" \
 "CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj" \
 "CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj" \
-"CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj"
+"CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj" \
+"CMakeFiles/Podcast.dir/server_main.cpp.obj" \
+"CMakeFiles/Podcast.dir/client_main.cpp.obj"
 
 # External object files for target Podcast
 Podcast_EXTERNAL_OBJECTS =
 
 Podcast.exe: CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj
-Podcast.exe: CMakeFiles/Podcast.dir/main.cpp.obj
 Podcast.exe: CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj
 Podcast.exe: CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj
 Podcast.exe: CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj
+Podcast.exe: CMakeFiles/Podcast.dir/server_main.cpp.obj
+Podcast.exe: CMakeFiles/Podcast.dir/client_main.cpp.obj
 Podcast.exe: CMakeFiles/Podcast.dir/build.make
 Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Widgets.a
 Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Multimedia.a
@@ -175,7 +192,7 @@ Podcast.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Core.a
 Podcast.exe: CMakeFiles/Podcast.dir/linkLibs.rsp
 Podcast.exe: CMakeFiles/Podcast.dir/objects1.rsp
 Podcast.exe: CMakeFiles/Podcast.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable Podcast.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Dev\Podcast\build\Desktop_Qt_6_11_1_MinGW_64_bit_Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Podcast.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Podcast.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -1,3 +1,6 @@
 # Hashes of file build rules.
-7fa6a4b2a6606f0f7cba4353ee751f90 CMakeFiles/Podcast_autogen
+7fa6a4b2a6606f0f7cba4353ee751f90 CMakeFiles/PodcastClient_autogen
+7fa6a4b2a6606f0f7cba4353ee751f90 CMakeFiles/PodcastServer_autogen
+d9d090c813f8e377f6aa32d1a3264ee5 PodcastClient_autogen/timestamp
+02b9124263ea9e17e591b0aeddc62e49 PodcastServer_autogen/timestamp
 8286f7053ad1dc12bbb8611d86bdc3de Podcast_autogen/timestamp

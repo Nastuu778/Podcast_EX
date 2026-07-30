@@ -12,19 +12,32 @@ set(CMAKE_AUTORCC ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Multimedia)
 
-add_executable(Podcast
-    main.cpp
+# === СЕРВЕР ===
+add_executable(PodcastServer
+    server_main.cpp
     network/tcpserver.cpp
     network/tcpserver.h
+)
+
+target_include_directories(PodcastServer PRIVATE ${CMAKE_SOURCE_DIR})
+
+target_link_libraries(PodcastServer PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Network
+)
+
+# === КЛИЕНТ ===
+add_executable(PodcastClient
+    client_main.cpp
     network/tcpclient.cpp
     network/tcpclient.h
     ui/mainwindow.cpp
     ui/mainwindow.h
 )
 
-target_include_directories(Podcast PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})
 
-target_link_libraries(Podcast PRIVATE
+target_link_libraries(PodcastClient PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::Multimedia

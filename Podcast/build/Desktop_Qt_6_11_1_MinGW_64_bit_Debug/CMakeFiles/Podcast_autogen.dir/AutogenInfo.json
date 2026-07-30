@@ -503,9 +503,10 @@
 	"SETTINGS_FILE" : "C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/Podcast_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "C:/Dev/Podcast/main.cpp", "MU", null ],
+		[ "C:/Dev/Podcast/client_main.cpp", "MU", null ],
 		[ "C:/Dev/Podcast/network/tcpclient.cpp", "MU", null ],
 		[ "C:/Dev/Podcast/network/tcpserver.cpp", "MU", null ],
+		[ "C:/Dev/Podcast/server_main.cpp", "MU", null ],
 		[ "C:/Dev/Podcast/ui/mainwindow.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],

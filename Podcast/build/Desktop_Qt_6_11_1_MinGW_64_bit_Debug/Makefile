@@ -116,98 +116,161 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Podcast
+# Target rules for targets named PodcastServer
 
 # Build rule for target.
-Podcast: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Podcast
-.PHONY : Podcast
+PodcastServer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PodcastServer
+.PHONY : PodcastServer
 
 # fast build rule for target.
-Podcast/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/build
-.PHONY : Podcast/fast
+PodcastServer/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/build
+.PHONY : PodcastServer/fast
 
 #=============================================================================
-# Target rules for targets named Podcast_autogen_timestamp_deps
+# Target rules for targets named PodcastClient
 
 # Build rule for target.
-Podcast_autogen_timestamp_deps: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Podcast_autogen_timestamp_deps
-.PHONY : Podcast_autogen_timestamp_deps
+PodcastClient: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PodcastClient
+.PHONY : PodcastClient
 
 # fast build rule for target.
-Podcast_autogen_timestamp_deps/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen_timestamp_deps.dir\build.make CMakeFiles/Podcast_autogen_timestamp_deps.dir/build
-.PHONY : Podcast_autogen_timestamp_deps/fast
+PodcastClient/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/build
+.PHONY : PodcastClient/fast
 
 #=============================================================================
-# Target rules for targets named Podcast_autogen
+# Target rules for targets named PodcastServer_autogen_timestamp_deps
 
 # Build rule for target.
-Podcast_autogen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Podcast_autogen
-.PHONY : Podcast_autogen
+PodcastServer_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PodcastServer_autogen_timestamp_deps
+.PHONY : PodcastServer_autogen_timestamp_deps
 
 # fast build rule for target.
-Podcast_autogen/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast_autogen.dir\build.make CMakeFiles/Podcast_autogen.dir/build
-.PHONY : Podcast_autogen/fast
+PodcastServer_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer_autogen_timestamp_deps.dir\build.make CMakeFiles/PodcastServer_autogen_timestamp_deps.dir/build
+.PHONY : PodcastServer_autogen_timestamp_deps/fast
 
-Podcast_autogen/mocs_compilation.obj: Podcast_autogen/mocs_compilation.cpp.obj
-.PHONY : Podcast_autogen/mocs_compilation.obj
+#=============================================================================
+# Target rules for targets named PodcastServer_autogen
+
+# Build rule for target.
+PodcastServer_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PodcastServer_autogen
+.PHONY : PodcastServer_autogen
+
+# fast build rule for target.
+PodcastServer_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer_autogen.dir\build.make CMakeFiles/PodcastServer_autogen.dir/build
+.PHONY : PodcastServer_autogen/fast
+
+#=============================================================================
+# Target rules for targets named PodcastClient_autogen_timestamp_deps
+
+# Build rule for target.
+PodcastClient_autogen_timestamp_deps: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PodcastClient_autogen_timestamp_deps
+.PHONY : PodcastClient_autogen_timestamp_deps
+
+# fast build rule for target.
+PodcastClient_autogen_timestamp_deps/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient_autogen_timestamp_deps.dir\build.make CMakeFiles/PodcastClient_autogen_timestamp_deps.dir/build
+.PHONY : PodcastClient_autogen_timestamp_deps/fast
+
+#=============================================================================
+# Target rules for targets named PodcastClient_autogen
+
+# Build rule for target.
+PodcastClient_autogen: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 PodcastClient_autogen
+.PHONY : PodcastClient_autogen
+
+# fast build rule for target.
+PodcastClient_autogen/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient_autogen.dir\build.make CMakeFiles/PodcastClient_autogen.dir/build
+.PHONY : PodcastClient_autogen/fast
+
+PodcastClient_autogen/mocs_compilation.obj: PodcastClient_autogen/mocs_compilation.cpp.obj
+.PHONY : PodcastClient_autogen/mocs_compilation.obj
 
 # target to build an object file
-Podcast_autogen/mocs_compilation.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj
-.PHONY : Podcast_autogen/mocs_compilation.cpp.obj
+PodcastClient_autogen/mocs_compilation.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/PodcastClient_autogen/mocs_compilation.cpp.obj
+.PHONY : PodcastClient_autogen/mocs_compilation.cpp.obj
 
-Podcast_autogen/mocs_compilation.i: Podcast_autogen/mocs_compilation.cpp.i
-.PHONY : Podcast_autogen/mocs_compilation.i
+PodcastClient_autogen/mocs_compilation.i: PodcastClient_autogen/mocs_compilation.cpp.i
+.PHONY : PodcastClient_autogen/mocs_compilation.i
 
 # target to preprocess a source file
-Podcast_autogen/mocs_compilation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.i
-.PHONY : Podcast_autogen/mocs_compilation.cpp.i
+PodcastClient_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/PodcastClient_autogen/mocs_compilation.cpp.i
+.PHONY : PodcastClient_autogen/mocs_compilation.cpp.i
 
-Podcast_autogen/mocs_compilation.s: Podcast_autogen/mocs_compilation.cpp.s
-.PHONY : Podcast_autogen/mocs_compilation.s
+PodcastClient_autogen/mocs_compilation.s: PodcastClient_autogen/mocs_compilation.cpp.s
+.PHONY : PodcastClient_autogen/mocs_compilation.s
 
 # target to generate assembly for a file
-Podcast_autogen/mocs_compilation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.s
-.PHONY : Podcast_autogen/mocs_compilation.cpp.s
+PodcastClient_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/PodcastClient_autogen/mocs_compilation.cpp.s
+.PHONY : PodcastClient_autogen/mocs_compilation.cpp.s
 
-main.obj: main.cpp.obj
-.PHONY : main.obj
+PodcastServer_autogen/mocs_compilation.obj: PodcastServer_autogen/mocs_compilation.cpp.obj
+.PHONY : PodcastServer_autogen/mocs_compilation.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+PodcastServer_autogen/mocs_compilation.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/PodcastServer_autogen/mocs_compilation.cpp.obj
+.PHONY : PodcastServer_autogen/mocs_compilation.cpp.obj
 
-main.i: main.cpp.i
-.PHONY : main.i
+PodcastServer_autogen/mocs_compilation.i: PodcastServer_autogen/mocs_compilation.cpp.i
+.PHONY : PodcastServer_autogen/mocs_compilation.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/main.cpp.i
-.PHONY : main.cpp.i
+PodcastServer_autogen/mocs_compilation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/PodcastServer_autogen/mocs_compilation.cpp.i
+.PHONY : PodcastServer_autogen/mocs_compilation.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+PodcastServer_autogen/mocs_compilation.s: PodcastServer_autogen/mocs_compilation.cpp.s
+.PHONY : PodcastServer_autogen/mocs_compilation.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/main.cpp.s
-.PHONY : main.cpp.s
+PodcastServer_autogen/mocs_compilation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/PodcastServer_autogen/mocs_compilation.cpp.s
+.PHONY : PodcastServer_autogen/mocs_compilation.cpp.s
+
+client_main.obj: client_main.cpp.obj
+.PHONY : client_main.obj
+
+# target to build an object file
+client_main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/client_main.cpp.obj
+.PHONY : client_main.cpp.obj
+
+client_main.i: client_main.cpp.i
+.PHONY : client_main.i
+
+# target to preprocess a source file
+client_main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/client_main.cpp.i
+.PHONY : client_main.cpp.i
+
+client_main.s: client_main.cpp.s
+.PHONY : client_main.s
+
+# target to generate assembly for a file
+client_main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/client_main.cpp.s
+.PHONY : client_main.cpp.s
 
 network/tcpclient.obj: network/tcpclient.cpp.obj
 .PHONY : network/tcpclient.obj
 
 # target to build an object file
 network/tcpclient.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/network/tcpclient.cpp.obj
 .PHONY : network/tcpclient.cpp.obj
 
 network/tcpclient.i: network/tcpclient.cpp.i
@@ -215,7 +278,7 @@ network/tcpclient.i: network/tcpclient.cpp.i
 
 # target to preprocess a source file
 network/tcpclient.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpclient.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/network/tcpclient.cpp.i
 .PHONY : network/tcpclient.cpp.i
 
 network/tcpclient.s: network/tcpclient.cpp.s
@@ -223,7 +286,7 @@ network/tcpclient.s: network/tcpclient.cpp.s
 
 # target to generate assembly for a file
 network/tcpclient.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpclient.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/network/tcpclient.cpp.s
 .PHONY : network/tcpclient.cpp.s
 
 network/tcpserver.obj: network/tcpserver.cpp.obj
@@ -231,7 +294,7 @@ network/tcpserver.obj: network/tcpserver.cpp.obj
 
 # target to build an object file
 network/tcpserver.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/network/tcpserver.cpp.obj
 .PHONY : network/tcpserver.cpp.obj
 
 network/tcpserver.i: network/tcpserver.cpp.i
@@ -239,7 +302,7 @@ network/tcpserver.i: network/tcpserver.cpp.i
 
 # target to preprocess a source file
 network/tcpserver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/network/tcpserver.cpp.i
 .PHONY : network/tcpserver.cpp.i
 
 network/tcpserver.s: network/tcpserver.cpp.s
@@ -247,15 +310,39 @@ network/tcpserver.s: network/tcpserver.cpp.s
 
 # target to generate assembly for a file
 network/tcpserver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/network/tcpserver.cpp.s
 .PHONY : network/tcpserver.cpp.s
+
+server_main.obj: server_main.cpp.obj
+.PHONY : server_main.obj
+
+# target to build an object file
+server_main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/server_main.cpp.obj
+.PHONY : server_main.cpp.obj
+
+server_main.i: server_main.cpp.i
+.PHONY : server_main.i
+
+# target to preprocess a source file
+server_main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/server_main.cpp.i
+.PHONY : server_main.cpp.i
+
+server_main.s: server_main.cpp.s
+.PHONY : server_main.s
+
+# target to generate assembly for a file
+server_main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/server_main.cpp.s
+.PHONY : server_main.cpp.s
 
 ui/mainwindow.obj: ui/mainwindow.cpp.obj
 .PHONY : ui/mainwindow.obj
 
 # target to build an object file
 ui/mainwindow.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/mainwindow.cpp.obj
 .PHONY : ui/mainwindow.cpp.obj
 
 ui/mainwindow.i: ui/mainwindow.cpp.i
@@ -263,7 +350,7 @@ ui/mainwindow.i: ui/mainwindow.cpp.i
 
 # target to preprocess a source file
 ui/mainwindow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/ui/mainwindow.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/mainwindow.cpp.i
 .PHONY : ui/mainwindow.cpp.i
 
 ui/mainwindow.s: ui/mainwindow.cpp.s
@@ -271,7 +358,7 @@ ui/mainwindow.s: ui/mainwindow.cpp.s
 
 # target to generate assembly for a file
 ui/mainwindow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/ui/mainwindow.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/mainwindow.cpp.s
 .PHONY : ui/mainwindow.cpp.s
 
 # Help Target
@@ -282,21 +369,30 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... Podcast_autogen
-	@echo ... Podcast_autogen_timestamp_deps
-	@echo ... Podcast
-	@echo ... Podcast_autogen/mocs_compilation.obj
-	@echo ... Podcast_autogen/mocs_compilation.i
-	@echo ... Podcast_autogen/mocs_compilation.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... PodcastClient_autogen
+	@echo ... PodcastClient_autogen_timestamp_deps
+	@echo ... PodcastServer_autogen
+	@echo ... PodcastServer_autogen_timestamp_deps
+	@echo ... PodcastClient
+	@echo ... PodcastServer
+	@echo ... PodcastClient_autogen/mocs_compilation.obj
+	@echo ... PodcastClient_autogen/mocs_compilation.i
+	@echo ... PodcastClient_autogen/mocs_compilation.s
+	@echo ... PodcastServer_autogen/mocs_compilation.obj
+	@echo ... PodcastServer_autogen/mocs_compilation.i
+	@echo ... PodcastServer_autogen/mocs_compilation.s
+	@echo ... client_main.obj
+	@echo ... client_main.i
+	@echo ... client_main.s
 	@echo ... network/tcpclient.obj
 	@echo ... network/tcpclient.i
 	@echo ... network/tcpclient.s
 	@echo ... network/tcpserver.obj
 	@echo ... network/tcpserver.i
 	@echo ... network/tcpserver.s
+	@echo ... server_main.obj
+	@echo ... server_main.i
+	@echo ... server_main.s
 	@echo ... ui/mainwindow.obj
 	@echo ... ui/mainwindow.i
 	@echo ... ui/mainwindow.s

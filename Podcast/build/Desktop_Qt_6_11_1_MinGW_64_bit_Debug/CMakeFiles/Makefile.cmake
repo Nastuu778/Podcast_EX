@@ -288,7 +288,8 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "CMakeFiles/Podcast_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/PodcastServer_autogen.dir/AutogenInfo.json"
+  "CMakeFiles/PodcastClient_autogen.dir/AutogenInfo.json"
   ".qt/QtDeploySupport.cmake"
   ".qt/QtDeployTargets.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -296,7 +297,10 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Podcast.dir/DependInfo.cmake"
-  "CMakeFiles/Podcast_autogen_timestamp_deps.dir/DependInfo.cmake"
-  "CMakeFiles/Podcast_autogen.dir/DependInfo.cmake"
+  "CMakeFiles/PodcastServer.dir/DependInfo.cmake"
+  "CMakeFiles/PodcastClient.dir/DependInfo.cmake"
+  "CMakeFiles/PodcastServer_autogen_timestamp_deps.dir/DependInfo.cmake"
+  "CMakeFiles/PodcastServer_autogen.dir/DependInfo.cmake"
+  "CMakeFiles/PodcastClient_autogen_timestamp_deps.dir/DependInfo.cmake"
+  "CMakeFiles/PodcastClient_autogen.dir/DependInfo.cmake"
   )

@@ -10,9 +10,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "Podcast_autogen/timestamp" "custom" "Podcast_autogen/deps"
   "C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/Podcast_autogen/mocs_compilation.cpp" "CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/Podcast_autogen/mocs_compilation.cpp.obj.d"
-  "C:/Dev/Podcast/main.cpp" "CMakeFiles/Podcast.dir/main.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/main.cpp.obj.d"
+  "C:/Dev/Podcast/client_main.cpp" "CMakeFiles/Podcast.dir/client_main.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/client_main.cpp.obj.d"
   "C:/Dev/Podcast/network/tcpclient.cpp" "CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj.d"
   "C:/Dev/Podcast/network/tcpserver.cpp" "CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/network/tcpserver.cpp.obj.d"
+  "C:/Dev/Podcast/server_main.cpp" "CMakeFiles/Podcast.dir/server_main.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/server_main.cpp.obj.d"
   "C:/Dev/Podcast/ui/mainwindow.cpp" "CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj" "gcc" "CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj.d"
   )
 

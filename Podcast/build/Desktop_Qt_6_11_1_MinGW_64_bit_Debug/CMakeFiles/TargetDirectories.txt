@@ -1,5 +1,8 @@
-C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/Podcast.dir
+C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/PodcastServer.dir
+C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/PodcastClient.dir
 C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/edit_cache.dir
 C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/rebuild_cache.dir
-C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/Podcast_autogen_timestamp_deps.dir
-C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/Podcast_autogen.dir
+C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/PodcastServer_autogen_timestamp_deps.dir
+C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/PodcastServer_autogen.dir
+C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/PodcastClient_autogen_timestamp_deps.dir
+C:/Dev/Podcast/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/PodcastClient_autogen.dir
