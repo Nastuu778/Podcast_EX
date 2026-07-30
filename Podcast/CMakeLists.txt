@@ -16,8 +16,13 @@ add_executable(Podcast
     main.cpp
     network/tcpserver.cpp
     network/tcpserver.h
-    README.md
+    network/tcpclient.cpp
+    network/tcpclient.h
+    ui/mainwindow.cpp
+    ui/mainwindow.h
 )
+
+target_include_directories(Podcast PRIVATE ${CMAKE_SOURCE_DIR})
 
 target_link_libraries(Podcast PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets

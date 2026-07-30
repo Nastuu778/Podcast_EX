@@ -1,14 +1,12 @@
 #include <QApplication>
-#include "network/tcpserver.h"
+#include "ui/mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    TcpServer server;
-    if (server.start(5000)) {
-        qDebug() << "Podcast server is running on port 5000";
-    }
+    MainWindow window;
+    window.show();
 
     return app.exec();
 }

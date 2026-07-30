@@ -409,9 +409,21 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Dev/Podcast/network/tcpclient.h",
+			"MU",
+			"5SSUPNRDSB/moc_tcpclient.cpp",
+			null
+		],
+		[
 			"C:/Dev/Podcast/network/tcpserver.h",
 			"MU",
 			"5SSUPNRDSB/moc_tcpserver.cpp",
+			null
+		],
+		[
+			"C:/Dev/Podcast/ui/mainwindow.h",
+			"MU",
+			"UYX5XTB5RZ/moc_mainwindow.cpp",
 			null
 		]
 	],
@@ -443,6 +455,7 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"C:/Dev/Podcast",
 		"C:/Qt/6.11.1/mingw_64/include/QtWidgets",
 		"C:/Qt/6.11.1/mingw_64/include",
 		"C:/Qt/6.11.1/mingw_64/include/QtCore",
@@ -491,7 +504,9 @@
 	"SOURCES" : 
 	[
 		[ "C:/Dev/Podcast/main.cpp", "MU", null ],
-		[ "C:/Dev/Podcast/network/tcpserver.cpp", "MU", null ]
+		[ "C:/Dev/Podcast/network/tcpclient.cpp", "MU", null ],
+		[ "C:/Dev/Podcast/network/tcpserver.cpp", "MU", null ],
+		[ "C:/Dev/Podcast/ui/mainwindow.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],

@@ -202,6 +202,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+network/tcpclient.obj: network/tcpclient.cpp.obj
+.PHONY : network/tcpclient.obj
+
+# target to build an object file
+network/tcpclient.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpclient.cpp.obj
+.PHONY : network/tcpclient.cpp.obj
+
+network/tcpclient.i: network/tcpclient.cpp.i
+.PHONY : network/tcpclient.i
+
+# target to preprocess a source file
+network/tcpclient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpclient.cpp.i
+.PHONY : network/tcpclient.cpp.i
+
+network/tcpclient.s: network/tcpclient.cpp.s
+.PHONY : network/tcpclient.s
+
+# target to generate assembly for a file
+network/tcpclient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpclient.cpp.s
+.PHONY : network/tcpclient.cpp.s
+
 network/tcpserver.obj: network/tcpserver.cpp.obj
 .PHONY : network/tcpserver.obj
 
@@ -226,6 +250,30 @@ network/tcpserver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/network/tcpserver.cpp.s
 .PHONY : network/tcpserver.cpp.s
 
+ui/mainwindow.obj: ui/mainwindow.cpp.obj
+.PHONY : ui/mainwindow.obj
+
+# target to build an object file
+ui/mainwindow.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/ui/mainwindow.cpp.obj
+.PHONY : ui/mainwindow.cpp.obj
+
+ui/mainwindow.i: ui/mainwindow.cpp.i
+.PHONY : ui/mainwindow.i
+
+# target to preprocess a source file
+ui/mainwindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/ui/mainwindow.cpp.i
+.PHONY : ui/mainwindow.cpp.i
+
+ui/mainwindow.s: ui/mainwindow.cpp.s
+.PHONY : ui/mainwindow.s
+
+# target to generate assembly for a file
+ui/mainwindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Podcast.dir\build.make CMakeFiles/Podcast.dir/ui/mainwindow.cpp.s
+.PHONY : ui/mainwindow.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -243,9 +291,15 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... network/tcpclient.obj
+	@echo ... network/tcpclient.i
+	@echo ... network/tcpclient.s
 	@echo ... network/tcpserver.obj
 	@echo ... network/tcpserver.i
 	@echo ... network/tcpserver.s
+	@echo ... ui/mainwindow.obj
+	@echo ... ui/mainwindow.i
+	@echo ... ui/mainwindow.s
 .PHONY : help
 
 
