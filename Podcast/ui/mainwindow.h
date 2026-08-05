@@ -8,6 +8,8 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QMessageBox>
+#include <QGroupBox>
 #include "network/tcpclient.h"
 
 class MainWindow : public QMainWindow
@@ -23,24 +25,27 @@ private slots:
     void onClientConnected();
     void onClientDisconnected();
     void onClientError(const QString &error);
-    void onSendMessageClicked();  // НОВОЕ
-    void onTextMessageReceived(const QString &message);  // НОВОЕ
+    void onSendMessageClicked();
+    void onTextMessageReceived(const QString &message);
 
 private:
     void setupUI();
     void updateStatus(const QString &status);
-    void appendChatMessage(const QString &message);  // НОВОЕ
+    void appendChatMessage(const QString &message);
+    bool validateUsername();  // НОВОЕ
 
     TcpClient *m_client;
     QLabel *m_statusLabel;
     QLineEdit *m_hostInput;
     QLineEdit *m_portInput;
+    QLineEdit *m_usernameInput;  // НОВОЕ
     QPushButton *m_connectButton;
 
-    // НОВЫЕ элементы для чата
     QTextEdit *m_chatDisplay;
     QLineEdit *m_messageInput;
     QPushButton *m_sendButton;
+
+    QString m_username;  // НОВОЕ - храним имя пользователя
 };
 
 #endif // MAINWINDOW_H

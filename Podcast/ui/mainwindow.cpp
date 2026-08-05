@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_client, &TcpClient::connected, this, &MainWindow::onClientConnected);
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &MainWindow::onClientError);
-    connect(m_client, &TcpClient::textMessageReceived, this, &MainWindow::onTextMessageReceived);  // НОВОЕ
+    connect(m_client, &TcpClient::textMessageReceived, this, &MainWindow::onTextMessageReceived);
 }
 
 MainWindow::~MainWindow()
@@ -21,27 +21,41 @@ MainWindow::~MainWindow()
 void MainWindow::setupUI()
 {
     setWindowTitle("Podcast Client");
-    resize(500, 400);
+    resize(500, 450);
 
     QWidget *centralWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
 
     // === Блок подключения ===
-    QHBoxLayout *connectLayout = new QHBoxLayout();
+    QGroupBox *connectGroup = new QGroupBox("Подключение к серверу");
+    QVBoxLayout *connectLayout = new QVBoxLayout(connectGroup);
 
+    // Поле имени пользователя
+    QHBoxLayout *usernameLayout = new QHBoxLayout();
+    usernameLayout->addWidget(new QLabel("Ваше имя:"));
+    m_usernameInput = new QLineEdit();
+    m_usernameInput->setPlaceholderText("Обязательно для заполнения");
+    m_usernameInput->setMaxLength(50);
+    usernameLayout->addWidget(m_usernameInput);
+    connectLayout->addLayout(usernameLayout);
+
+    // Адрес и порт
+    QHBoxLayout *hostLayout = new QHBoxLayout();
+    hostLayout->addWidget(new QLabel("Сервер:"));
     m_hostInput = new QLineEdit("127.0.0.1");
     m_hostInput->setPlaceholderText("Адрес сервера");
-    connectLayout->addWidget(m_hostInput);
+    hostLayout->addWidget(m_hostInput);
 
     m_portInput = new QLineEdit("5000");
     m_portInput->setPlaceholderText("Порт");
     m_portInput->setMaximumWidth(100);
-    connectLayout->addWidget(m_portInput);
+    hostLayout->addWidget(m_portInput);
+    connectLayout->addLayout(hostLayout);
 
     m_connectButton = new QPushButton("Подключиться");
     connectLayout->addWidget(m_connectButton);
 
-    mainLayout->addLayout(connectLayout);
+    mainLayout->addWidget(connectGroup);
 
     // === Статус ===
     m_statusLabel = new QLabel("Статус: Не подключено");
@@ -59,11 +73,11 @@ void MainWindow::setupUI()
 
     m_messageInput = new QLineEdit();
     m_messageInput->setPlaceholderText("Введите сообщение...");
-    m_messageInput->setEnabled(false);  // Пока не подключено
+    m_messageInput->setEnabled(false);
     messageLayout->addWidget(m_messageInput);
 
     m_sendButton = new QPushButton("Отправить");
-    m_sendButton->setEnabled(false);  // Пока не подключено
+    m_sendButton->setEnabled(false);
     messageLayout->addWidget(m_sendButton);
 
     mainLayout->addLayout(messageLayout);
@@ -72,32 +86,61 @@ void MainWindow::setupUI()
 
     connect(m_connectButton, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
     connect(m_sendButton, &QPushButton::clicked, this, &MainWindow::onSendMessageClicked);
-
-    // Отправка по Enter
     connect(m_messageInput, &QLineEdit::returnPressed, this, &MainWindow::onSendMessageClicked);
+}
+
+bool MainWindow::validateUsername()
+{
+    m_username = m_usernameInput->text().trimmed();
+
+    if (m_username.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите ваше имя!");
+        m_usernameInput->setFocus();
+        return false;
+    }
+
+    if (m_username.length() < 1) {
+        QMessageBox::warning(this, "Ошибка", "Имя должно содержать минимум 1 символ!");
+        m_usernameInput->setFocus();
+        return false;
+    }
+
+    return true;
 }
 
 void MainWindow::onConnectButtonClicked()
 {
-    QString host = m_hostInput->text();
-    quint16 port = m_portInput->text().toUShort();
+    if (!m_client->isConnected()) {
+        if (!validateUsername()) {
+            return;
+        }
 
-    if (m_client->isConnected()) {
-        m_client->disconnectFromServer();
-        m_connectButton->setText("Подключиться");
-    } else {
+        QString host = m_hostInput->text();
+        quint16 port = m_portInput->text().toUShort();
+
         m_client->connectToServer(host, port);
         m_connectButton->setText("Отключиться");
+
+        m_usernameInput->setEnabled(false);
+        m_hostInput->setEnabled(false);
+        m_portInput->setEnabled(false);
+    } else {
+        m_client->disconnectFromServer();
+        m_connectButton->setText("Подключиться");
+
+        m_usernameInput->setEnabled(true);
+        m_hostInput->setEnabled(true);
+        m_portInput->setEnabled(true);
     }
 }
 
 void MainWindow::onClientConnected()
 {
-    updateStatus("Клиент подключён к серверу");
+    updateStatus("Подключено как: " + m_username);
     m_connectButton->setText("Отключиться");
     m_messageInput->setEnabled(true);
     m_sendButton->setEnabled(true);
-    appendChatMessage("Вы подключились к серверу");
+    appendChatMessage(m_username + " подключился к серверу");
 }
 
 void MainWindow::onClientDisconnected()
@@ -106,7 +149,11 @@ void MainWindow::onClientDisconnected()
     m_connectButton->setText("Подключиться");
     m_messageInput->setEnabled(false);
     m_sendButton->setEnabled(false);
-    appendChatMessage(" Соединение разорвано");
+    appendChatMessage("Соединение разорвано");
+
+    m_usernameInput->setEnabled(true);
+    m_hostInput->setEnabled(true);
+    m_portInput->setEnabled(true);
 }
 
 void MainWindow::onClientError(const QString &error)
@@ -115,6 +162,10 @@ void MainWindow::onClientError(const QString &error)
     m_connectButton->setText("Подключиться");
     m_messageInput->setEnabled(false);
     m_sendButton->setEnabled(false);
+
+    m_usernameInput->setEnabled(true);
+    m_hostInput->setEnabled(true);
+    m_portInput->setEnabled(true);
 }
 
 void MainWindow::onSendMessageClicked()
@@ -122,14 +173,16 @@ void MainWindow::onSendMessageClicked()
     QString message = m_messageInput->text().trimmed();
     if (message.isEmpty()) return;
 
-    m_client->sendTextMessage(message);
-    appendChatMessage("Вы: " + message);  // Показываем своё сообщение
+    // Отправляем сообщение с username
+    QString fullMessage = m_username + ": " + message;
+    m_client->sendTextMessage(fullMessage);
+    appendChatMessage(m_username + ": " + message);
     m_messageInput->clear();
 }
 
 void MainWindow::onTextMessageReceived(const QString &message)
 {
-    appendChatMessage("Сервер: " + message);
+    appendChatMessage(message);
 }
 
 void MainWindow::updateStatus(const QString &status)
