@@ -361,6 +361,30 @@ ui/mainwindow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/mainwindow.cpp.s
 .PHONY : ui/mainwindow.cpp.s
 
+ui/roledialog.obj: ui/roledialog.cpp.obj
+.PHONY : ui/roledialog.obj
+
+# target to build an object file
+ui/roledialog.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/roledialog.cpp.obj
+.PHONY : ui/roledialog.cpp.obj
+
+ui/roledialog.i: ui/roledialog.cpp.i
+.PHONY : ui/roledialog.i
+
+# target to preprocess a source file
+ui/roledialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/roledialog.cpp.i
+.PHONY : ui/roledialog.cpp.i
+
+ui/roledialog.s: ui/roledialog.cpp.s
+.PHONY : ui/roledialog.s
+
+# target to generate assembly for a file
+ui/roledialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/roledialog.cpp.s
+.PHONY : ui/roledialog.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -396,6 +420,9 @@ help:
 	@echo ... ui/mainwindow.obj
 	@echo ... ui/mainwindow.i
 	@echo ... ui/mainwindow.s
+	@echo ... ui/roledialog.obj
+	@echo ... ui/roledialog.i
+	@echo ... ui/roledialog.s
 .PHONY : help
 
 

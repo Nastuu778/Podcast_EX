@@ -111,23 +111,31 @@ void TcpServer::onClientReadyRead()
             m_clientBuffers[sender].remove(0, bytesRead);
 
             if (!message.isEmpty()) {
-                // Проверяем, это username?
-                if (message.startsWith("/username:")) {
-                    QString username = message.mid(10);  // Убираем "/username:"
-                    qDebug() << "Client username:" << username;
+                qDebug() << "Received from client:" << message;
 
-                    // Создаём системное сообщение о подключении
-                    QString systemMessage = username + " подключился к серверу";
+                // Проверяем, это команда /join:?
+                if (message.startsWith("/join:")) {
+                    // Формат: /join:username:role
+                    QStringList parts = message.mid(6).split(':');
+                    if (parts.size() == 2) {
+                        QString username = parts[0];
+                        QString role = parts[1];
 
-                    // Добавляем в историю
-                    addMessageToHistory(systemMessage);
+                        qDebug() << "Client joined:" << username << "as" << role;
 
-                    // Отправляем всем клиентам
-                    broadcastMessage(systemMessage, nullptr);  // nullptr = отправить всем
+                        // Создаём системное сообщение
+                        QString systemMessage = username + " подключился к серверу как " +
+                                                (role == "speaker" ? "спикер" : "слушатель");
+
+                        // Добавляем в историю
+                        addMessageToHistory(systemMessage);
+
+                        // Отправляем всем клиентам (включая отправителя)
+                        broadcastMessage(systemMessage, nullptr);
+                    }
                 } else {
-                    qDebug() << "Received from client:" << message;
+                    // Обычное сообщение чата
                     emit messageReceived(sender, message);
-
                     addMessageToHistory(message);
                     broadcastMessage(message, sender);
                 }

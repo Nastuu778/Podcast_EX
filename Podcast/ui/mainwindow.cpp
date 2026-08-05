@@ -1,11 +1,18 @@
 #include "mainwindow.h"
 #include <QMessageBox>
+#include <QSplitter>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(const QString &username,
+                       const QString &host,
+                       quint16 port,
+                       int role,
+                       QWidget *parent)
     : QMainWindow(parent)
     , m_client(new TcpClient(this))
-    , m_clientId(QUuid::createUuid().toString(QUuid::WithoutBraces))
-    , m_isConnecting(false)  // Инициализация флага
+    , m_username(username)
+    , m_host(host)
+    , m_port(port)
+    , m_role(role)
 {
     setupUI();
 
@@ -13,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &MainWindow::onClientError);
     connect(m_client, &TcpClient::textMessageReceived, this, &MainWindow::onTextMessageReceived);
+
+    // Подключаемся к серверу
+    m_client->connectToServer(m_host, m_port);
 }
 
 MainWindow::~MainWindow()
@@ -22,57 +32,59 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupUI()
 {
-    setWindowTitle("Podcast Client");
-    resize(500, 450);
+    setWindowTitle("Podcast Client - " + m_username);
+    resize(900, 600);
 
     QWidget *centralWidget = new QWidget(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    QHBoxLayout *mainLayout = new QHBoxLayout(centralWidget);
 
-    // === Блок подключения ===
-    QGroupBox *connectGroup = new QGroupBox("Подключение к серверу");
-    QVBoxLayout *connectLayout = new QVBoxLayout(connectGroup);
+    // === ЛЕВАЯ ПАНЕЛЬ - Списки участников ===
+    QGroupBox *participantsGroup = new QGroupBox("Участники");
+    QVBoxLayout *participantsLayout = new QVBoxLayout(participantsGroup);
 
-    // Поле имени пользователя
-    QHBoxLayout *usernameLayout = new QHBoxLayout();
-    usernameLayout->addWidget(new QLabel("Ваше имя:"));
-    m_usernameInput = new QLineEdit();
-    m_usernameInput->setPlaceholderText("Обязательно для заполнения");
-    m_usernameInput->setMaxLength(50);
-    usernameLayout->addWidget(m_usernameInput);
-    connectLayout->addLayout(usernameLayout);
+    // Спикеры
+    QLabel *speakersLabel = new QLabel("🎙️ Спикеры:");
+    speakersLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    participantsLayout->addWidget(speakersLabel);
 
-    // Адрес и порт
-    QHBoxLayout *hostLayout = new QHBoxLayout();
-    hostLayout->addWidget(new QLabel("Сервер:"));
-    m_hostInput = new QLineEdit("127.0.0.1");
-    m_hostInput->setPlaceholderText("Адрес сервера");
-    hostLayout->addWidget(m_hostInput);
+    m_speakersList = new QListWidget();
+    m_speakersList->setMinimumHeight(150);
+    participantsLayout->addWidget(m_speakersList);
 
-    m_portInput = new QLineEdit("5000");
-    m_portInput->setPlaceholderText("Порт");
-    m_portInput->setMaximumWidth(100);
-    hostLayout->addWidget(m_portInput);
-    connectLayout->addLayout(hostLayout);
+    // Слушатели
+    QLabel *listenersLabel = new QLabel(" Слушатели:");
+    listenersLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    participantsLayout->addWidget(listenersLabel);
 
-    m_connectButton = new QPushButton("Подключиться");
-    connectLayout->addWidget(m_connectButton);
+    m_listenersList = new QListWidget();
+    m_listenersList->setMinimumHeight(200);
+    participantsLayout->addWidget(m_listenersList);
 
-    mainLayout->addWidget(connectGroup);
+    mainLayout->addWidget(participantsGroup, 1);
 
-    // === Статус ===
-    m_statusLabel = new QLabel("Статус: Не подключено");
-    m_statusLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(m_statusLabel);
+    // === ПРАВАЯ ПАНЕЛЬ - Чат и статус ===
+    QVBoxLayout *rightLayout = new QVBoxLayout();
 
-    // === Область чата ===
+    // Статус и роль
+    QHBoxLayout *statusLayout = new QHBoxLayout();
+
+    m_roleLabel = new QLabel(m_role == 0 ? "Роль: Спикер" : "Роль: Слушатель");
+    m_roleLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    statusLayout->addWidget(m_roleLabel);
+
+    m_statusLabel = new QLabel("Подключение...");
+    statusLayout->addWidget(m_statusLabel);
+
+    rightLayout->addLayout(statusLayout);
+
+    // Область чата
     m_chatDisplay = new QTextEdit();
     m_chatDisplay->setReadOnly(true);
     m_chatDisplay->setPlaceholderText("Здесь будут отображаться сообщения...");
-    mainLayout->addWidget(m_chatDisplay);
+    rightLayout->addWidget(m_chatDisplay);
 
-    // === Ввод сообщения ===
+    // Ввод сообщения (только для спикеров и слушателей - все могут писать в чат)
     QHBoxLayout *messageLayout = new QHBoxLayout();
-
     m_messageInput = new QLineEdit();
     m_messageInput->setPlaceholderText("Введите сообщение...");
     m_messageInput->setEnabled(false);
@@ -82,97 +94,49 @@ void MainWindow::setupUI()
     m_sendButton->setEnabled(false);
     messageLayout->addWidget(m_sendButton);
 
-    mainLayout->addLayout(messageLayout);
+    rightLayout->addLayout(messageLayout);
+
+    // Кнопка отключения
+    m_disconnectButton = new QPushButton("Отключиться");
+    m_disconnectButton->setEnabled(false);
+    rightLayout->addWidget(m_disconnectButton);
+
+    mainLayout->addLayout(rightLayout, 3);
 
     setCentralWidget(centralWidget);
 
-    connect(m_connectButton, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
     connect(m_sendButton, &QPushButton::clicked, this, &MainWindow::onSendMessageClicked);
     connect(m_messageInput, &QLineEdit::returnPressed, this, &MainWindow::onSendMessageClicked);
-}
-
-bool MainWindow::validateUsername()
-{
-    m_username = m_usernameInput->text().trimmed();
-
-    if (m_username.isEmpty()) {
-        QMessageBox::warning(this, "Ошибка", "Пожалуйста, введите ваше имя!");
-        m_usernameInput->setFocus();
-        return false;
-    }
-
-    if (m_username.length() < 1) {
-        QMessageBox::warning(this, "Ошибка", "Имя должно содержать минимум 1 символ!");
-        m_usernameInput->setFocus();
-        return false;
-    }
-
-    return true;
-}
-
-void MainWindow::onConnectButtonClicked()
-{
-    if (!m_client->isConnected()) {
-        if (!validateUsername()) {
-            return;
-        }
-
-        QString host = m_hostInput->text();
-        quint16 port = m_portInput->text().toUShort();
-
-        m_client->connectToServer(host, port);
-        m_connectButton->setText("Отключиться");
-
-        m_usernameInput->setEnabled(false);
-        m_hostInput->setEnabled(false);
-        m_portInput->setEnabled(false);
-    } else {
-        m_client->disconnectFromServer();
-        m_connectButton->setText("Подключиться");
-
-        m_usernameInput->setEnabled(true);
-        m_hostInput->setEnabled(true);
-        m_portInput->setEnabled(true);
-    }
+    connect(m_disconnectButton, &QPushButton::clicked, m_client, &TcpClient::disconnectFromServer);
 }
 
 void MainWindow::onClientConnected()
 {
-    updateStatus("Подключено как: " + m_username);
-    m_connectButton->setText("Отключиться");
+    updateStatus("Подключено");
     m_messageInput->setEnabled(true);
     m_sendButton->setEnabled(true);
+    m_disconnectButton->setEnabled(true);
 
-    // Отправляем username на сервер
-    m_client->sendUsername(m_username);
+    // Отправляем информацию о себе на сервер
+    sendRoleToServer();
 
     // НЕ добавляем сообщение о подключении!
-    // Сервер сам его создаст и отправит
+    // Сервер сам отправит его после обработки /join:
 }
 
 void MainWindow::onClientDisconnected()
 {
-    updateStatus("Клиент отключён от сервера");
-    m_connectButton->setText("Подключиться");
+    updateStatus("Отключено");
     m_messageInput->setEnabled(false);
     m_sendButton->setEnabled(false);
-    appendChatMessage("Соединение разорвано");
-
-    m_usernameInput->setEnabled(true);
-    m_hostInput->setEnabled(true);
-    m_portInput->setEnabled(true);
+    m_disconnectButton->setEnabled(false);
+    appendChatMessage("Вы отключились от подкаста");
 }
 
 void MainWindow::onClientError(const QString &error)
 {
     updateStatus("Ошибка: " + error);
-    m_connectButton->setText("Подключиться");
-    m_messageInput->setEnabled(false);
-    m_sendButton->setEnabled(false);
-
-    m_usernameInput->setEnabled(true);
-    m_hostInput->setEnabled(true);
-    m_portInput->setEnabled(true);
+    QMessageBox::critical(this, "Ошибка подключения", error);
 }
 
 void MainWindow::onSendMessageClicked()
@@ -180,22 +144,57 @@ void MainWindow::onSendMessageClicked()
     QString message = m_messageInput->text().trimmed();
     if (message.isEmpty()) return;
 
-    // Отправляем сообщение с username
     QString fullMessage = m_username + ": " + message;
     m_client->sendTextMessage(fullMessage);
-    appendChatMessage(m_username + ": " + message);
+    appendChatMessage(fullMessage);
     m_messageInput->clear();
 }
 
 void MainWindow::onTextMessageReceived(const QString &message)
 {
-    // Проверяем, это системное сообщение о username?
-    if (message.startsWith("/username:")) {
-        // Это не для отображения, игнорируем
+    // Игнорируем сырые команды (на всякий случай)
+    if (message.startsWith("/join:") || message.startsWith("/participants:")) {
         return;
     }
 
+    // Обычное сообщение чата или системное сообщение
     appendChatMessage(message);
+}
+
+void MainWindow::updateParticipantList(const QString &data)
+{
+    // Парсим данные от сервера
+    // Формат: /participants:speakers:user1,user2;listeners:user3,user4
+    QString cleanData = data.mid(15);  // Убираем "/participants:"
+
+    QStringList parts = cleanData.split(';');
+    if (parts.size() != 2) return;
+
+    // Спикеры
+    QString speakersPart = parts[0];
+    if (speakersPart.startsWith("speakers:")) {
+        QString speakersStr = speakersPart.mid(9);
+        QStringList speakers = speakersStr.split(',');
+        m_speakersList->clear();
+        for (const QString &speaker : speakers) {
+            if (!speaker.trimmed().isEmpty()) {
+                m_speakersList->addItem(speaker.trimmed());
+            }
+        }
+    }
+
+    // Слушатели
+    QString listenersPart = parts[1];
+    if (listenersPart.startsWith("listeners:")) {
+        QString listenersStr = listenersPart.mid(10);
+        QStringList listeners = listenersStr.split(',');
+        m_listenersList->clear();
+        for (const QString &listener : listeners) {
+            if (!listener.trimmed().isEmpty()) {
+                m_listenersList->addItem(listener.trimmed());
+            }
+        }
+    }
 }
 
 void MainWindow::updateStatus(const QString &status)
@@ -206,4 +205,12 @@ void MainWindow::updateStatus(const QString &status)
 void MainWindow::appendChatMessage(const QString &message)
 {
     m_chatDisplay->append(message);
+}
+
+void MainWindow::sendRoleToServer()
+{
+    // Отправляем на сервер информацию о себе
+    QString roleStr = m_role == 0 ? "speaker" : "listener";
+    QString message = QString("/join:%1:%2").arg(m_username).arg(roleStr);
+    m_client->sendTextMessage(message);
 }

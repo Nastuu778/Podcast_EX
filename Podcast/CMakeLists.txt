@@ -31,8 +31,18 @@ add_executable(PodcastClient
     client_main.cpp
     network/tcpclient.cpp
     network/tcpclient.h
+    ui/roledialog.cpp
+    ui/roledialog.h
     ui/mainwindow.cpp
     ui/mainwindow.h
+)
+
+target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})
+
+target_link_libraries(PodcastClient PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Network
+    Qt${QT_VERSION_MAJOR}::Multimedia
 )
 
 target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})
