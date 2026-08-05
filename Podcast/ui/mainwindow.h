@@ -35,6 +35,8 @@ private:
     void appendChatMessage(const QString &message);
     bool validateUsername();  // НОВОЕ
 
+    bool m_isConnecting;  // НОВОЕ - флаг подключения
+
     TcpClient *m_client;
     QLabel *m_statusLabel;
     QLineEdit *m_hostInput;

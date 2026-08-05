@@ -4,7 +4,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_client(new TcpClient(this))
-    , m_clientId(QUuid::createUuid().toString(QUuid::WithoutBraces))  // Правильный синтаксис
+    , m_clientId(QUuid::createUuid().toString(QUuid::WithoutBraces))
+    , m_isConnecting(false)  // Инициализация флага
 {
     setupUI();
 
@@ -12,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &MainWindow::onClientError);
     connect(m_client, &TcpClient::textMessageReceived, this, &MainWindow::onTextMessageReceived);
-
-    qDebug() << "Client ID generated:" << m_clientId;  // Для отладки
 }
 
 MainWindow::~MainWindow()
@@ -143,7 +142,12 @@ void MainWindow::onClientConnected()
     m_connectButton->setText("Отключиться");
     m_messageInput->setEnabled(true);
     m_sendButton->setEnabled(true);
-    appendChatMessage(m_username + " подключился к серверу");
+
+    // Отправляем username на сервер
+    m_client->sendUsername(m_username);
+
+    // НЕ добавляем сообщение о подключении!
+    // Сервер сам его создаст и отправит
 }
 
 void MainWindow::onClientDisconnected()
@@ -185,6 +189,12 @@ void MainWindow::onSendMessageClicked()
 
 void MainWindow::onTextMessageReceived(const QString &message)
 {
+    // Проверяем, это системное сообщение о username?
+    if (message.startsWith("/username:")) {
+        // Это не для отображения, игнорируем
+        return;
+    }
+
     appendChatMessage(message);
 }
 

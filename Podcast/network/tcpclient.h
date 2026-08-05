@@ -15,23 +15,24 @@ public:
     void connectToServer(const QString &host, quint16 port);
     void disconnectFromServer();
     bool isConnected() const;
-
-    void sendTextMessage(const QString &message);  // НОВОЕ
+    void sendTextMessage(const QString &message);
+    void sendUsername(const QString &username);
 
 signals:
     void connected();
     void disconnected();
     void errorOccurred(const QString &error);
-    void textMessageReceived(const QString &message);  // НОВОЕ
+    void textMessageReceived(const QString &message);
 
 private slots:
     void onConnected();
     void onDisconnected();
     void onError(QAbstractSocket::SocketError error);
-    void onReadyRead();  // НОВОЕ
+    void onReadyRead();
 
 private:
     QTcpSocket *m_socket;
+    QByteArray m_buffer;  // НОВОЕ - буфер для данных
 };
 
 #endif // TCPCLIENT_H

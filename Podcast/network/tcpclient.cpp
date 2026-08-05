@@ -10,7 +10,7 @@ TcpClient::TcpClient(QObject *parent)
     connect(m_socket, &QTcpSocket::disconnected, this, &TcpClient::onDisconnected);
     connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::errorOccurred),
             this, &TcpClient::onError);
-    connect(m_socket, &QTcpSocket::readyRead, this, &TcpClient::onReadyRead);  // НОВОЕ
+    connect(m_socket, &QTcpSocket::readyRead, this, &TcpClient::onReadyRead);
 }
 
 TcpClient::~TcpClient()
@@ -20,6 +20,7 @@ TcpClient::~TcpClient()
 
 void TcpClient::connectToServer(const QString &host, quint16 port)
 {
+    m_buffer.clear();  // Очищаем буфер при новом подключении
     m_socket->connectToHost(host, port);
 }
 
@@ -39,12 +40,11 @@ void TcpClient::sendTextMessage(const QString &message)
 {
     if (!isConnected()) return;
 
-    // Используем QDataStream для надёжной передачи
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Qt_6_0);
 
-    stream << message;  // Записываем сообщение в поток
+    stream << message;
 
     m_socket->write(data);
     m_socket->flush();
@@ -73,17 +73,47 @@ void TcpClient::onError(QAbstractSocket::SocketError error)
 
 void TcpClient::onReadyRead()
 {
-    // Читаем все доступные данные
-    QByteArray data = m_socket->readAll();
+    // Добавляем новые данные в буфер
+    m_buffer.append(m_socket->readAll());
 
-    QDataStream stream(data);
-    stream.setVersion(QDataStream::Qt_6_0);
+    // Пытаемся извлечь все сообщения из буфера
+    while (m_buffer.size() > 0) {
+        QDataStream stream(m_buffer);
+        stream.setVersion(QDataStream::Qt_6_0);
 
-    QString message;
-    stream >> message;  // Извлекаем сообщение из потока
+        QString message;
+        stream >> message;
 
-    if (!message.isEmpty()) {
-        qDebug() << "Received message:" << message;
-        emit textMessageReceived(message);
+        // Проверяем, удалось ли прочитать сообщение
+        if (stream.status() == QDataStream::Ok) {
+            // Вычисляем сколько байт было прочитано
+            int bytesRead = m_buffer.size() - stream.device()->bytesAvailable();
+            m_buffer.remove(0, bytesRead);  // Удаляем прочитанное из буфера
+
+            if (!message.isEmpty()) {
+                qDebug() << "Received message:" << message;
+                emit textMessageReceived(message);
+            }
+        } else {
+            // Данные неполные, ждём ещё
+            break;
+        }
     }
+}
+
+void TcpClient::sendUsername(const QString &username)
+{
+    if (!isConnected()) return;
+
+    QString usernameMessage = QString("/username:%1").arg(username);
+
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Qt_6_0);
+    stream << usernameMessage;
+
+    m_socket->write(data);
+    m_socket->flush();
+
+    qDebug() << "Sent username:" << username;
 }
