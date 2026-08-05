@@ -35,6 +35,7 @@ add_executable(PodcastClient
     ui/roledialog.h
     ui/mainwindow.cpp
     ui/mainwindow.h
+    README.md
 )
 
 target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})
