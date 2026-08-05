@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_client(new TcpClient(this))
+    , m_clientId(QUuid::createUuid().toString(QUuid::WithoutBraces))  // Правильный синтаксис
 {
     setupUI();
 
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &MainWindow::onClientError);
     connect(m_client, &TcpClient::textMessageReceived, this, &MainWindow::onTextMessageReceived);
+
+    qDebug() << "Client ID generated:" << m_clientId;  // Для отладки
 }
 
 MainWindow::~MainWindow()

@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QGroupBox>
+#include <QUuid>
 #include "network/tcpclient.h"
 
 class MainWindow : public QMainWindow
@@ -46,6 +47,7 @@ private:
     QPushButton *m_sendButton;
 
     QString m_username;  // НОВОЕ - храним имя пользователя
+    QString m_clientId;
 };
 
 #endif // MAINWINDOW_H
