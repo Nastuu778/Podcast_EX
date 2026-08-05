@@ -16,15 +16,19 @@ public:
     void disconnectFromServer();
     bool isConnected() const;
 
+    void sendTextMessage(const QString &message);  // НОВОЕ
+
 signals:
     void connected();
     void disconnected();
     void errorOccurred(const QString &error);
+    void textMessageReceived(const QString &message);  // НОВОЕ
 
 private slots:
     void onConnected();
     void onDisconnected();
     void onError(QAbstractSocket::SocketError error);
+    void onReadyRead();  // НОВОЕ
 
 private:
     QTcpSocket *m_socket;
