@@ -32,9 +32,14 @@ private:
     void broadcastMessage(const QString &message, QTcpSocket *sender);
     void sendHistoryToClient(QTcpSocket *client);
     void addMessageToHistory(const QString &message);
+    void sendParticipantListToClient(QTcpSocket *client);  // НОВОЕ
+    void sendParticipantListToAll();  // НОВОЕ
+    QString getClientUsername(QTcpSocket *client);  // НОВОЕ
 
     QList<QTcpSocket*> m_clients;
-    QMap<QTcpSocket*, QByteArray> m_clientBuffers;  // НОВОЕ - буферы для каждого клиента
+    QMap<QTcpSocket*, QByteArray> m_clientBuffers;
+    QMap<QTcpSocket*, QString> m_clientUsernames;  // НОВОЕ
+    QMap<QTcpSocket*, QString> m_clientRoles;  // НОВОЕ
     QStringList m_messageHistory;
     static const int MAX_HISTORY_SIZE = 15;
 };

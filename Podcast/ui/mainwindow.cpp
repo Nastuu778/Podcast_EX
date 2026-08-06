@@ -72,6 +72,11 @@ void MainWindow::setupUI()
     m_roleLabel->setFont(QFont("Arial", 10, QFont::Bold));
     statusLayout->addWidget(m_roleLabel);
 
+    // НОВОЕ: Добавляем имя пользователя
+    QLabel *userLabel = new QLabel("Пользователь: " + m_username);
+    userLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    statusLayout->addWidget(userLabel);
+
     m_statusLabel = new QLabel("Подключение...");
     statusLayout->addWidget(m_statusLabel);
 
@@ -152,29 +157,36 @@ void MainWindow::onSendMessageClicked()
 
 void MainWindow::onTextMessageReceived(const QString &message)
 {
-    // Игнорируем сырые команды (на всякий случай)
-    if (message.startsWith("/join:") || message.startsWith("/participants:")) {
+    // Проверяем, это список участников?
+    if (message.startsWith("/participants:")) {
+        updateParticipantList(message);
         return;
     }
 
-    // Обычное сообщение чата или системное сообщение
+    // Игнорируем сырые команды
+    if (message.startsWith("/join:")) {
+        return;
+    }
+
+    // Обычное сообщение чата или системное
     appendChatMessage(message);
 }
 
 void MainWindow::updateParticipantList(const QString &data)
 {
-    // Парсим данные от сервера
     // Формат: /participants:speakers:user1,user2;listeners:user3,user4
-    QString cleanData = data.mid(15);  // Убираем "/participants:"
+    // "/participants:" = 14 символов
+    QString cleanData = data.mid(14);
 
     QStringList parts = cleanData.split(';');
     if (parts.size() != 2) return;
 
-    // Спикеры
+    // === Спикеры ===
     QString speakersPart = parts[0];
     if (speakersPart.startsWith("speakers:")) {
-        QString speakersStr = speakersPart.mid(9);
+        QString speakersStr = speakersPart.mid(9);  // "speakers:" = 9 символов
         QStringList speakers = speakersStr.split(',');
+
         m_speakersList->clear();
         for (const QString &speaker : speakers) {
             if (!speaker.trimmed().isEmpty()) {
@@ -183,11 +195,12 @@ void MainWindow::updateParticipantList(const QString &data)
         }
     }
 
-    // Слушатели
+    // === Слушатели ===
     QString listenersPart = parts[1];
     if (listenersPart.startsWith("listeners:")) {
-        QString listenersStr = listenersPart.mid(10);
+        QString listenersStr = listenersPart.mid(10);  // "listeners:" = 10 символов
         QStringList listeners = listenersStr.split(',');
+
         m_listenersList->clear();
         for (const QString &listener : listeners) {
             if (!listener.trimmed().isEmpty()) {

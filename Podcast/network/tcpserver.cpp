@@ -30,6 +30,8 @@ void TcpServer::stop()
     }
     m_clients.clear();
     m_clientBuffers.clear();
+    m_clientUsernames.clear();  // НОВОЕ
+    m_clientRoles.clear();  // НОВОЕ
     m_messageHistory.clear();
     QTcpServer::close();
     qDebug() << "Server stopped";
@@ -49,18 +51,40 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
 
     // Сначала отправляем историю
     sendHistoryToClient(client);
-    // Затем создаём системное сообщение о подключении
-    // Его нужно получить от клиента (username)
-    // Поэтому пока просто добавляем клиента в список
+
+    // Затем отправляем список участников
+    sendParticipantListToClient(client);
 
     connect(client, &QTcpSocket::disconnected, this, [this, client]() {
+        // Получаем имя клиента ПЕРЕД удалением
+        QString username = getClientUsername(client);
+
         m_clients.removeOne(client);
         m_clientBuffers.remove(client);
+        m_clientUsernames.remove(client);
+        m_clientRoles.remove(client);
+
         qDebug() << "Client disconnected:" << client->peerAddress().toString();
+
+        // Создаём сообщение об отключении
+        if (!username.isEmpty()) {
+            QString disconnectMessage = username + " отключился от сервера";
+            addMessageToHistory(disconnectMessage);
+            broadcastMessage(disconnectMessage, nullptr);
+
+            // Обновляем список участников для всех
+            sendParticipantListToAll();
+        }
+
         emit clientDisconnected(client);
     });
 
     emit clientConnected(client);
+}
+
+QString TcpServer::getClientUsername(QTcpSocket *client)
+{
+    return m_clientUsernames.value(client, "");
 }
 
 void TcpServer::sendHistoryToClient(QTcpSocket *client)
@@ -89,6 +113,46 @@ void TcpServer::addMessageToHistory(const QString &message)
 
     if (m_messageHistory.size() > MAX_HISTORY_SIZE) {
         m_messageHistory.removeFirst();
+    }
+}
+
+void TcpServer::sendParticipantListToClient(QTcpSocket *client)
+{
+    // Собираем списки спикеров и слушателей
+    QStringList speakers;
+    QStringList listeners;
+
+    for (QTcpSocket *c : m_clients) {
+        QString username = m_clientUsernames.value(c);
+        QString role = m_clientRoles.value(c);
+
+        if (role == "speaker") {
+            speakers.append(username);
+        } else if (role == "listener") {
+            listeners.append(username);
+        }
+    }
+
+    // Формируем сообщение
+    QString message = "/participants:speakers:" + speakers.join(',') +
+                      ";listeners:" + listeners.join(',');
+
+    // Отправляем клиенту
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Qt_6_0);
+    stream << message;
+
+    client->write(data);
+    client->flush();
+
+    qDebug() << "Sent participant list to client";
+}
+
+void TcpServer::sendParticipantListToAll()
+{
+    for (QTcpSocket *client : m_clients) {
+        sendParticipantListToClient(client);
     }
 }
 
@@ -123,6 +187,10 @@ void TcpServer::onClientReadyRead()
 
                         qDebug() << "Client joined:" << username << "as" << role;
 
+                        // ВАЖНО: Сохраняем информацию о клиенте
+                        m_clientUsernames[sender] = username;
+                        m_clientRoles[sender] = role;
+
                         // Создаём системное сообщение
                         QString systemMessage = username + " подключился к серверу как " +
                                                 (role == "speaker" ? "спикер" : "слушатель");
@@ -132,6 +200,9 @@ void TcpServer::onClientReadyRead()
 
                         // Отправляем всем клиентам (включая отправителя)
                         broadcastMessage(systemMessage, nullptr);
+
+                        // Обновляем список участников для всех
+                        sendParticipantListToAll();
                     }
                 } else {
                     // Обычное сообщение чата
