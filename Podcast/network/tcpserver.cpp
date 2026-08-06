@@ -187,7 +187,44 @@ void TcpServer::onClientReadyRead()
 
                         qDebug() << "Client joined:" << username << "as" << role;
 
-                        // ВАЖНО: Сохраняем информацию о клиенте
+                        // === ПРОВЕРКА ЛИМИТОВ ===
+                        if (role == "speaker") {
+                            int speakerCount = countClientsByRole("speaker");
+                            if (speakerCount >= MAX_SPEAKERS) {
+                                // Лимит спикеров достигнут
+                                QString errorMsg = "/error:Достигнут лимит спикеров (максимум 2). Попробуйте подключиться как слушатель.";
+
+                                QByteArray data;
+                                QDataStream stream(&data, QIODevice::WriteOnly);
+                                stream.setVersion(QDataStream::Qt_6_0);
+                                stream << errorMsg;
+
+                                sender->write(data);
+                                sender->flush();
+
+                                qDebug() << "Rejected speaker" << username << "- limit reached";
+                                continue;
+                            }
+                        } else if (role == "listener") {
+                            int listenerCount = countClientsByRole("listener");
+                            if (listenerCount >= MAX_LISTENERS) {
+                                // Лимит слушателей достигнут
+                                QString errorMsg = "/error:Достигнут лимит слушателей (максимум 6). Попробуйте позже.";
+
+                                QByteArray data;
+                                QDataStream stream(&data, QIODevice::WriteOnly);
+                                stream.setVersion(QDataStream::Qt_6_0);
+                                stream << errorMsg;
+
+                                sender->write(data);
+                                sender->flush();
+
+                                qDebug() << "Rejected listener" << username << "- limit reached";
+                                continue;
+                            }
+                        }
+
+                        // === Если лимит не достигнут - регистрируем клиента ===
                         m_clientUsernames[sender] = username;
                         m_clientRoles[sender] = role;
 
@@ -233,4 +270,15 @@ void TcpServer::broadcastMessage(const QString &message, QTcpSocket *sender)
             client->flush();
         }
     }
+}
+
+int TcpServer::countClientsByRole(const QString &role)
+{
+    int count = 0;
+    for (const QString &r : m_clientRoles.values()) {
+        if (r == role) {
+            count++;
+        }
+    }
+    return count;
 }

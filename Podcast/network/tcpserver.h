@@ -34,6 +34,7 @@ private:
     void addMessageToHistory(const QString &message);
     void sendParticipantListToClient(QTcpSocket *client);  // НОВОЕ
     void sendParticipantListToAll();  // НОВОЕ
+    int countClientsByRole(const QString &role);
     QString getClientUsername(QTcpSocket *client);  // НОВОЕ
 
     QList<QTcpSocket*> m_clients;
@@ -42,6 +43,8 @@ private:
     QMap<QTcpSocket*, QString> m_clientRoles;  // НОВОЕ
     QStringList m_messageHistory;
     static const int MAX_HISTORY_SIZE = 15;
+    static const int MAX_SPEAKERS = 2;
+    static const int MAX_LISTENERS = 6;
 };
 
 #endif // TCPSERVER_H

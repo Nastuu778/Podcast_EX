@@ -163,6 +163,15 @@ void MainWindow::onTextMessageReceived(const QString &message)
         return;
     }
 
+    // НОВОЕ: Проверяем, это сообщение об ошибке?
+    if (message.startsWith("/error:")) {
+        QString errorMessage = message.mid(7);  // Убираем "/error:"
+        QMessageBox::warning(this, "Ошибка подключения", errorMessage);
+        m_client->disconnectFromServer();  // Отключаемся от сервера
+        close();  // Закрываем главное окно
+        return;
+    }
+
     // Игнорируем сырые команды
     if (message.startsWith("/join:")) {
         return;
