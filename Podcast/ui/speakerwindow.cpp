@@ -1,0 +1,266 @@
+#include "speakerwindow.h"
+#include <QMessageBox>
+
+SpeakerWindow::SpeakerWindow(const QString &username,
+                             const QString &host,
+                             quint16 port,
+                             QWidget *parent)
+    : QMainWindow(parent)
+    , m_client(new TcpClient(this))
+    , m_username(username)
+    , m_host(host)
+    , m_port(port)
+{
+    setupUI();
+
+    connect(m_client, &TcpClient::connected, this, &SpeakerWindow::onClientConnected);
+    connect(m_client, &TcpClient::disconnected, this, &SpeakerWindow::onClientDisconnected);
+    connect(m_client, &TcpClient::errorOccurred, this, &SpeakerWindow::onClientError);
+    connect(m_client, &TcpClient::textMessageReceived, this, &SpeakerWindow::onTextMessageReceived);
+
+    m_client->connectToServer(m_host, m_port);
+}
+
+SpeakerWindow::~SpeakerWindow()
+{
+    m_client->disconnectFromServer();
+}
+
+void SpeakerWindow::setupUI()
+{
+    setWindowTitle("Podcast - Спикер: " + m_username);
+    resize(900, 600);
+
+    QWidget *centralWidget = new QWidget(this);
+    QHBoxLayout *mainLayout = new QHBoxLayout(centralWidget);
+
+    // === ЛЕВАЯ ПАНЕЛЬ - Участники ===
+    QGroupBox *participantsGroup = new QGroupBox("Участники");
+    QVBoxLayout *participantsLayout = new QVBoxLayout(participantsGroup);
+
+    QLabel *speakersLabel = new QLabel("Спикеры:");
+    speakersLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    participantsLayout->addWidget(speakersLabel);
+
+    m_speakersList = new QListWidget();
+    m_speakersList->setMinimumHeight(150);
+    participantsLayout->addWidget(m_speakersList);
+
+    QLabel *listenersLabel = new QLabel("Слушатели:");
+    listenersLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    participantsLayout->addWidget(listenersLabel);
+
+    m_listenersList = new QListWidget();
+    m_listenersList->setMinimumHeight(200);
+    participantsLayout->addWidget(m_listenersList);
+
+    mainLayout->addWidget(participantsGroup, 1);
+
+    // === ПРАВАЯ ПАНЕЛЬ ===
+    QVBoxLayout *rightLayout = new QVBoxLayout();
+
+    // === БЛОК СПИКЕРА (НОВОЕ) ===
+    QGroupBox *speakerGroup = new QGroupBox("Управление микрофоном");
+    QVBoxLayout *speakerLayout = new QVBoxLayout(speakerGroup);
+
+    QHBoxLayout *micLayout = new QHBoxLayout();
+    m_micButton = new QPushButton("Включить микрофон");
+    m_micButton->setCheckable(true);
+    m_micButton->setEnabled(false);  // Пока нет подключения
+    m_micButton->setStyleSheet(
+        "QPushButton { background-color: #e0e0e0; padding: 10px; font-weight: bold; }"
+        "QPushButton:checked { background-color: #4CAF50; color: white; }"
+        );
+    micLayout->addWidget(m_micButton);
+    speakerLayout->addLayout(micLayout);
+
+    m_micStatusLabel = new QLabel("Микрофон выключен");
+    m_micStatusLabel->setAlignment(Qt::AlignCenter);
+    speakerLayout->addWidget(m_micStatusLabel);
+
+    // Индикатор уровня звука
+    m_audioLevelBar = new QProgressBar();
+    m_audioLevelBar->setRange(0, 100);
+    m_audioLevelBar->setValue(0);
+    m_audioLevelBar->setTextVisible(false);
+    speakerLayout->addWidget(m_audioLevelBar);
+
+    rightLayout->addWidget(speakerGroup);
+
+    // === Информация о пользователе ===
+    QHBoxLayout *statusLayout = new QHBoxLayout();
+    m_roleLabel = new QLabel("Роль: Спикер");
+    m_roleLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    statusLayout->addWidget(m_roleLabel);
+
+    m_userLabel = new QLabel("Пользователь: " + m_username);
+    m_userLabel->setFont(QFont("Arial", 10, QFont::Bold));
+    statusLayout->addWidget(m_userLabel);
+
+    m_statusLabel = new QLabel("Подключение...");
+    statusLayout->addWidget(m_statusLabel);
+
+    rightLayout->addLayout(statusLayout);
+
+    // === Чат ===
+    m_chatDisplay = new QTextEdit();
+    m_chatDisplay->setReadOnly(true);
+    rightLayout->addWidget(m_chatDisplay);
+
+    QHBoxLayout *messageLayout = new QHBoxLayout();
+    m_messageInput = new QLineEdit();
+    m_messageInput->setPlaceholderText("Введите сообщение...");
+    m_messageInput->setEnabled(false);
+    messageLayout->addWidget(m_messageInput);
+
+    m_sendButton = new QPushButton("Отправить");
+    m_sendButton->setEnabled(false);
+    messageLayout->addWidget(m_sendButton);
+
+    rightLayout->addLayout(messageLayout);
+
+    m_disconnectButton = new QPushButton("Отключиться");
+    m_disconnectButton->setEnabled(false);
+    rightLayout->addWidget(m_disconnectButton);
+
+    mainLayout->addLayout(rightLayout, 3);
+
+    setCentralWidget(centralWidget);
+
+    connect(m_sendButton, &QPushButton::clicked, this, &SpeakerWindow::onSendMessageClicked);
+    connect(m_messageInput, &QLineEdit::returnPressed, this, &SpeakerWindow::onSendMessageClicked);
+    connect(m_disconnectButton, &QPushButton::clicked, m_client, &TcpClient::disconnectFromServer);
+    connect(m_micButton, &QPushButton::toggled, this, &SpeakerWindow::onMicrophoneToggle);  // НОВОЕ
+}
+
+void SpeakerWindow::onMicrophoneToggle(bool checked)
+{
+    if (checked) {
+        m_micButton->setText("Выключить микрофон");
+        m_micStatusLabel->setText("Микрофон включён - вы говорите!");
+        m_micStatusLabel->setStyleSheet("color: green; font-weight: bold;");
+        appendChatMessage("[Система] Вы включили микрофон");
+
+        // TODO: Здесь будет запуск захвата звука
+    } else {
+        m_micButton->setText("Включить микрофон");
+        m_micStatusLabel->setText("Микрофон выключен");
+        m_micStatusLabel->setStyleSheet("color: gray;");
+        appendChatMessage("[Система] Вы выключили микрофон");
+
+        // TODO: Здесь будет остановка захвата звука
+    }
+}
+
+void SpeakerWindow::onClientConnected()
+{
+    updateStatus("Подключено");
+    m_messageInput->setEnabled(true);
+    m_sendButton->setEnabled(true);
+    m_disconnectButton->setEnabled(true);
+    m_micButton->setEnabled(true);  // НОВОЕ: активируем кнопку микрофона
+
+    sendRoleToServer();
+}
+
+void SpeakerWindow::onClientDisconnected()
+{
+    updateStatus("Отключено");
+    m_messageInput->setEnabled(false);
+    m_sendButton->setEnabled(false);
+    m_disconnectButton->setEnabled(false);
+    m_micButton->setEnabled(false);
+
+    if (m_micButton->isChecked()) {
+        m_micButton->setChecked(false);
+    }
+
+    appendChatMessage("Вы отключились от подкаста");
+}
+
+void SpeakerWindow::onClientError(const QString &error)
+{
+    updateStatus("Ошибка: " + error);
+    QMessageBox::critical(this, "Ошибка подключения", error);
+}
+
+void SpeakerWindow::onSendMessageClicked()
+{
+    QString message = m_messageInput->text().trimmed();
+    if (message.isEmpty()) return;
+
+    QString fullMessage = m_username + ": " + message;
+    m_client->sendTextMessage(fullMessage);
+    appendChatMessage(fullMessage);
+    m_messageInput->clear();
+}
+
+void SpeakerWindow::onTextMessageReceived(const QString &message)
+{
+    if (message.startsWith("/participants:")) {
+        updateParticipantList(message);
+        return;
+    }
+
+    if (message.startsWith("/error:")) {
+        QString errorMessage = message.mid(7);
+        QMessageBox::warning(this, "Ошибка подключения", errorMessage);
+        m_client->disconnectFromServer();
+        close();
+        return;
+    }
+
+    if (message.startsWith("/join:")) {
+        return;
+    }
+
+    appendChatMessage(message);
+}
+
+void SpeakerWindow::updateParticipantList(const QString &data)
+{
+    QString cleanData = data.mid(14);
+
+    QStringList parts = cleanData.split(';');
+    if (parts.size() != 2) return;
+
+    QString speakersPart = parts[0];
+    if (speakersPart.startsWith("speakers:")) {
+        QString speakersStr = speakersPart.mid(9);
+        QStringList speakers = speakersStr.split(',');
+        m_speakersList->clear();
+        for (const QString &speaker : speakers) {
+            if (!speaker.trimmed().isEmpty()) {
+                m_speakersList->addItem(speaker.trimmed());
+            }
+        }
+    }
+
+    QString listenersPart = parts[1];
+    if (listenersPart.startsWith("listeners:")) {
+        QString listenersStr = listenersPart.mid(10);
+        QStringList listeners = listenersStr.split(',');
+        m_listenersList->clear();
+        for (const QString &listener : listeners) {
+            if (!listener.trimmed().isEmpty()) {
+                m_listenersList->addItem(listener.trimmed());
+            }
+        }
+    }
+}
+
+void SpeakerWindow::updateStatus(const QString &status)
+{
+    m_statusLabel->setText(status);
+}
+
+void SpeakerWindow::appendChatMessage(const QString &message)
+{
+    m_chatDisplay->append(message);
+}
+
+void SpeakerWindow::sendRoleToServer()
+{
+    QString message = QString("/join:%1:speaker").arg(m_username);
+    m_client->sendTextMessage(message);
+}

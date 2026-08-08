@@ -5,14 +5,12 @@
 MainWindow::MainWindow(const QString &username,
                        const QString &host,
                        quint16 port,
-                       int role,
                        QWidget *parent)
     : QMainWindow(parent)
     , m_client(new TcpClient(this))
     , m_username(username)
     , m_host(host)
     , m_port(port)
-    , m_role(role)
 {
     setupUI();
 
@@ -68,7 +66,7 @@ void MainWindow::setupUI()
     // Статус и роль
     QHBoxLayout *statusLayout = new QHBoxLayout();
 
-    m_roleLabel = new QLabel(m_role == 0 ? "Роль: Спикер" : "Роль: Слушатель");
+    m_roleLabel = new QLabel("Роль: Слушатель");
     m_roleLabel->setFont(QFont("Arial", 10, QFont::Bold));
     statusLayout->addWidget(m_roleLabel);
 
@@ -231,8 +229,6 @@ void MainWindow::appendChatMessage(const QString &message)
 
 void MainWindow::sendRoleToServer()
 {
-    // Отправляем на сервер информацию о себе
-    QString roleStr = m_role == 0 ? "speaker" : "listener";
-    QString message = QString("/join:%1:%2").arg(m_username).arg(roleStr);
+    QString message = QString("/join:%1:listener").arg(m_username);
     m_client->sendTextMessage(message);
 }

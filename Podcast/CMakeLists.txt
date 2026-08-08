@@ -36,6 +36,8 @@ add_executable(PodcastClient
     ui/mainwindow.cpp
     ui/mainwindow.h
     README.md
+    ui/speakerwindow.h
+    ui/speakerwindow.cpp
 )
 
 target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})

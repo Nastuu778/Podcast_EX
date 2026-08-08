@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SPEAKERWINDOW_H
+#define SPEAKERWINDOW_H
 
 #include <QMainWindow>
 #include <QLabel>
@@ -10,19 +10,19 @@
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QGroupBox>
-#include <QSplitter>
+#include <QProgressBar>
 #include "network/tcpclient.h"
 
-class MainWindow : public QMainWindow
+class SpeakerWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(const QString &username,
-                        const QString &host,
-                        quint16 port,
-                        QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit SpeakerWindow(const QString &username,
+                           const QString &host,
+                           quint16 port,
+                           QWidget *parent = nullptr);
+    ~SpeakerWindow();
 
 private slots:
     void onClientConnected();
@@ -31,6 +31,7 @@ private slots:
     void onSendMessageClicked();
     void onTextMessageReceived(const QString &message);
     void updateParticipantList(const QString &data);
+    void onMicrophoneToggle(bool checked);  // НОВОЕ
 
 private:
     void setupUI();
@@ -46,12 +47,18 @@ private:
     // UI элементы
     QLabel *m_statusLabel;
     QLabel *m_roleLabel;
+    QLabel *m_userLabel;
     QListWidget *m_speakersList;
     QListWidget *m_listenersList;
     QTextEdit *m_chatDisplay;
     QLineEdit *m_messageInput;
     QPushButton *m_sendButton;
     QPushButton *m_disconnectButton;
+
+    // НОВОЕ: Элементы для микрофона
+    QPushButton *m_micButton;
+    QLabel *m_micStatusLabel;
+    QProgressBar *m_audioLevelBar;
 };
 
-#endif // MAINWINDOW_H
+#endif // SPEAKERWINDOW_H
