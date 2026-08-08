@@ -13,16 +13,32 @@ SpeakerWindow::SpeakerWindow(const QString &username,
 {
     setupUI();
 
+    // Создаём менеджер аудио
+    m_audioManager = new AudioManager(this);
+
+    // Заполняем список микрофонов
+    m_micComboBox->addItems(m_audioManager->availableMicrophones());
+
+    // Подключаем сигналы клиента
     connect(m_client, &TcpClient::connected, this, &SpeakerWindow::onClientConnected);
     connect(m_client, &TcpClient::disconnected, this, &SpeakerWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &SpeakerWindow::onClientError);
     connect(m_client, &TcpClient::textMessageReceived, this, &SpeakerWindow::onTextMessageReceived);
+
+    // Подключаем сигналы аудио
+    connect(m_audioManager, &AudioManager::audioLevelChanged, m_audioLevelBar, &QProgressBar::setValue);
+    connect(m_audioManager, &AudioManager::captureError, this, [this](const QString &error) {
+        m_micStatusLabel->setText("Ошибка: " + error);
+        m_micStatusLabel->setStyleSheet("color: red;");
+        m_micButton->setChecked(false);
+    });
 
     m_client->connectToServer(m_host, m_port);
 }
 
 SpeakerWindow::~SpeakerWindow()
 {
+    m_audioManager->stopCapture();
     m_client->disconnectFromServer();
 }
 
@@ -59,10 +75,18 @@ void SpeakerWindow::setupUI()
     // === ПРАВАЯ ПАНЕЛЬ ===
     QVBoxLayout *rightLayout = new QVBoxLayout();
 
-    // === БЛОК СПИКЕРА (НОВОЕ) ===
+    // === БЛОК СПИКЕРА ===
     QGroupBox *speakerGroup = new QGroupBox("Управление микрофоном");
     QVBoxLayout *speakerLayout = new QVBoxLayout(speakerGroup);
 
+    // Выбор микрофона
+    QHBoxLayout *deviceLayout = new QHBoxLayout();
+    deviceLayout->addWidget(new QLabel("Микрофон:"));
+    m_micComboBox = new QComboBox();
+    deviceLayout->addWidget(m_micComboBox);
+    speakerLayout->addLayout(deviceLayout);
+
+    // Кнопка микрофона
     QHBoxLayout *micLayout = new QHBoxLayout();
     m_micButton = new QPushButton("Включить микрофон");
     m_micButton->setCheckable(true);
@@ -130,25 +154,36 @@ void SpeakerWindow::setupUI()
     connect(m_sendButton, &QPushButton::clicked, this, &SpeakerWindow::onSendMessageClicked);
     connect(m_messageInput, &QLineEdit::returnPressed, this, &SpeakerWindow::onSendMessageClicked);
     connect(m_disconnectButton, &QPushButton::clicked, m_client, &TcpClient::disconnectFromServer);
-    connect(m_micButton, &QPushButton::toggled, this, &SpeakerWindow::onMicrophoneToggle);  // НОВОЕ
+    connect(m_micButton, &QPushButton::toggled, this, &SpeakerWindow::onMicrophoneToggle);
 }
 
 void SpeakerWindow::onMicrophoneToggle(bool checked)
 {
     if (checked) {
+        // Запускаем захват с выбранного микрофона
+        QString deviceName = m_micComboBox->currentText();
+        if (!m_audioManager->startCapture(deviceName)) {
+            m_micButton->setChecked(false);
+            return;
+        }
+
+        m_micComboBox->setEnabled(false);  // Блокируем смену микрофона во время записи
         m_micButton->setText("Выключить микрофон");
         m_micStatusLabel->setText("Микрофон включён - вы говорите!");
         m_micStatusLabel->setStyleSheet("color: green; font-weight: bold;");
         appendChatMessage("[Система] Вы включили микрофон");
 
-        // TODO: Здесь будет запуск захвата звука
+        // TODO: Здесь будет отправка аудио по UDP
     } else {
+        m_audioManager->stopCapture();
+
+        m_micComboBox->setEnabled(true);
         m_micButton->setText("Включить микрофон");
         m_micStatusLabel->setText("Микрофон выключен");
         m_micStatusLabel->setStyleSheet("color: gray;");
         appendChatMessage("[Система] Вы выключили микрофон");
 
-        // TODO: Здесь будет остановка захвата звука
+        // TODO: Здесь будет остановка отправки аудио
     }
 }
 
@@ -158,7 +193,7 @@ void SpeakerWindow::onClientConnected()
     m_messageInput->setEnabled(true);
     m_sendButton->setEnabled(true);
     m_disconnectButton->setEnabled(true);
-    m_micButton->setEnabled(true);  // НОВОЕ: активируем кнопку микрофона
+    m_micButton->setEnabled(true);  // Активируем кнопку микрофона
 
     sendRoleToServer();
 }

@@ -11,6 +11,8 @@
 #include <QListWidget>
 #include <QGroupBox>
 #include <QProgressBar>
+#include <QComboBox>
+#include "audio/audiomanager.h"
 #include "network/tcpclient.h"
 
 class SpeakerWindow : public QMainWindow
@@ -59,6 +61,8 @@ private:
     QPushButton *m_micButton;
     QLabel *m_micStatusLabel;
     QProgressBar *m_audioLevelBar;
+    QComboBox *m_micComboBox;      // Выбор микрофона
+    AudioManager *m_audioManager;  // Менеджер аудио
 };
 
 #endif // SPEAKERWINDOW_H

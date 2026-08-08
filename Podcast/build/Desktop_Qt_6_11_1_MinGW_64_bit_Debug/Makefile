@@ -241,6 +241,30 @@ PodcastServer_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/PodcastServer_autogen/mocs_compilation.cpp.s
 .PHONY : PodcastServer_autogen/mocs_compilation.cpp.s
 
+audio/audiomanager.obj: audio/audiomanager.cpp.obj
+.PHONY : audio/audiomanager.obj
+
+# target to build an object file
+audio/audiomanager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audiomanager.cpp.obj
+.PHONY : audio/audiomanager.cpp.obj
+
+audio/audiomanager.i: audio/audiomanager.cpp.i
+.PHONY : audio/audiomanager.i
+
+# target to preprocess a source file
+audio/audiomanager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audiomanager.cpp.i
+.PHONY : audio/audiomanager.cpp.i
+
+audio/audiomanager.s: audio/audiomanager.cpp.s
+.PHONY : audio/audiomanager.s
+
+# target to generate assembly for a file
+audio/audiomanager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audiomanager.cpp.s
+.PHONY : audio/audiomanager.cpp.s
+
 client_main.obj: client_main.cpp.obj
 .PHONY : client_main.obj
 
@@ -429,6 +453,9 @@ help:
 	@echo ... PodcastServer_autogen/mocs_compilation.obj
 	@echo ... PodcastServer_autogen/mocs_compilation.i
 	@echo ... PodcastServer_autogen/mocs_compilation.s
+	@echo ... audio/audiomanager.obj
+	@echo ... audio/audiomanager.i
+	@echo ... audio/audiomanager.s
 	@echo ... client_main.obj
 	@echo ... client_main.i
 	@echo ... client_main.s
