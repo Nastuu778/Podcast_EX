@@ -1,6 +1,8 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
+#include <QHostAddress>
+#include <QPair>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QList>
@@ -34,9 +36,11 @@ private:
     void addMessageToHistory(const QString &message);
     void sendParticipantListToClient(QTcpSocket *client);  // НОВОЕ
     void sendParticipantListToAll();  // НОВОЕ
+    void handleUdpPort(QTcpSocket *client, const QString &message);
     int countClientsByRole(const QString &role);
     QString getClientUsername(QTcpSocket *client);  // НОВОЕ
 
+    QMap<QTcpSocket*, QPair<QHostAddress, quint16>> m_clientUdpAddresses;
     QList<QTcpSocket*> m_clients;
     QMap<QTcpSocket*, QByteArray> m_clientBuffers;
     QMap<QTcpSocket*, QString> m_clientUsernames;  // НОВОЕ

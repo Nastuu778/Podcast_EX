@@ -40,6 +40,8 @@ add_executable(PodcastClient
     ui/speakerwindow.cpp
     audio/audiomanager.h
     audio/audiomanager.cpp
+    network/udpmanager.h
+    network/udpmanager.cpp
 )
 
 target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})

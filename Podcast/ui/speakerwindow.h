@@ -12,6 +12,7 @@
 #include <QGroupBox>
 #include <QProgressBar>
 #include <QComboBox>
+#include "network/udpmanager.h"
 #include "audio/audiomanager.h"
 #include "network/tcpclient.h"
 
@@ -42,6 +43,7 @@ private:
     void sendRoleToServer();
 
     TcpClient *m_client;
+    UdpManager *m_udpManager;
     QString m_username;
     QString m_host;
     quint16 m_port;

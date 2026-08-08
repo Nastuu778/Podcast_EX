@@ -13,6 +13,10 @@ SpeakerWindow::SpeakerWindow(const QString &username,
 {
     setupUI();
 
+    // Создаём UDP-менеджер и занимаем порт
+    m_udpManager = new UdpManager(this);
+    m_udpManager->bind();
+
     // Создаём менеджер аудио
     m_audioManager = new AudioManager(this);
 
@@ -196,6 +200,8 @@ void SpeakerWindow::onClientConnected()
     m_micButton->setEnabled(true);  // Активируем кнопку микрофона
 
     sendRoleToServer();
+    // Сообщаем серверу наш UDP-порт для приёма аудио
+    m_client->sendTextMessage(QString("/udpport:%1").arg(m_udpManager->localPort()));
 }
 
 void SpeakerWindow::onClientDisconnected()

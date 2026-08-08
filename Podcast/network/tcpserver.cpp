@@ -30,8 +30,9 @@ void TcpServer::stop()
     }
     m_clients.clear();
     m_clientBuffers.clear();
-    m_clientUsernames.clear();  // НОВОЕ
-    m_clientRoles.clear();  // НОВОЕ
+    m_clientUsernames.clear();
+    m_clientRoles.clear();
+    m_clientUdpAddresses.clear();
     m_messageHistory.clear();
     QTcpServer::close();
     qDebug() << "Server stopped";
@@ -63,6 +64,7 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
         m_clientBuffers.remove(client);
         m_clientUsernames.remove(client);
         m_clientRoles.remove(client);
+        m_clientUdpAddresses.remove(client);
 
         qDebug() << "Client disconnected:" << client->peerAddress().toString();
 
@@ -114,6 +116,38 @@ void TcpServer::addMessageToHistory(const QString &message)
     if (m_messageHistory.size() > MAX_HISTORY_SIZE) {
         m_messageHistory.removeFirst();
     }
+}
+
+void TcpServer::handleUdpPort(QTcpSocket *client, const QString &message)
+{
+    bool ok = false;
+    quint16 port = message.mid(9).toUShort(&ok);  // Убираем "/udpport:"
+
+    if (ok) {
+        // Берём адрес клиента из TCP-соединения
+        QHostAddress addr = client->peerAddress();
+
+        // Преобразуем IPv4-mapped IPv6 (::ffff:127.0.0.1) в обычный IPv4
+        // Работаем через строку - это надёжно во всех версиях Qt
+        QString addrStr = addr.toString();
+        if (addrStr.startsWith("::ffff:")) {
+            addr = QHostAddress(addrStr.mid(7));  // Убираем "::ffff:"
+        }
+
+        m_clientUdpAddresses[client] = qMakePair(addr, port);
+        qDebug() << "Registered UDP for client:" << addr.toString() << ":" << port;
+    }
+}
+
+int TcpServer::countClientsByRole(const QString &role)
+{
+    int count = 0;
+    for (const QString &r : m_clientRoles.values()) {
+        if (r == role) {
+            count++;
+        }
+    }
+    return count;
 }
 
 void TcpServer::sendParticipantListToClient(QTcpSocket *client)
@@ -176,6 +210,12 @@ void TcpServer::onClientReadyRead()
 
             if (!message.isEmpty()) {
                 qDebug() << "Received from client:" << message;
+
+                // Проверяем, это UDP-порт клиента?
+                if (message.startsWith("/udpport:")) {
+                    handleUdpPort(sender, message);
+                    continue;  // Это служебная команда, не рассылаем
+                }
 
                 // Проверяем, это команда /join:?
                 if (message.startsWith("/join:")) {
@@ -270,15 +310,4 @@ void TcpServer::broadcastMessage(const QString &message, QTcpSocket *sender)
             client->flush();
         }
     }
-}
-
-int TcpServer::countClientsByRole(const QString &role)
-{
-    int count = 0;
-    for (const QString &r : m_clientRoles.values()) {
-        if (r == role) {
-            count++;
-        }
-    }
-    return count;
 }

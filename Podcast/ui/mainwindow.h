@@ -11,6 +11,7 @@
 #include <QListWidget>
 #include <QGroupBox>
 #include <QSplitter>
+#include "network/udpmanager.h"
 #include "network/tcpclient.h"
 
 class MainWindow : public QMainWindow
@@ -38,6 +39,7 @@ private:
     void appendChatMessage(const QString &message);
     void sendRoleToServer();
 
+    UdpManager *m_udpManager;
     TcpClient *m_client;
     QString m_username;
     QString m_host;

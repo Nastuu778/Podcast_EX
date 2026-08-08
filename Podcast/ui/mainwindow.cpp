@@ -14,6 +14,10 @@ MainWindow::MainWindow(const QString &username,
 {
     setupUI();
 
+    // Создаём UDP-менеджер и занимаем порт
+    m_udpManager = new UdpManager(this);
+    m_udpManager->bind();
+
     connect(m_client, &TcpClient::connected, this, &MainWindow::onClientConnected);
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &MainWindow::onClientError);
@@ -122,6 +126,8 @@ void MainWindow::onClientConnected()
 
     // Отправляем информацию о себе на сервер
     sendRoleToServer();
+    // Сообщаем серверу наш UDP-порт для приёма аудио
+    m_client->sendTextMessage(QString("/udpport:%1").arg(m_udpManager->localPort()));
 
     // НЕ добавляем сообщение о подключении!
     // Сервер сам отправит его после обработки /join:

@@ -337,6 +337,30 @@ network/tcpserver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastServer.dir\build.make CMakeFiles/PodcastServer.dir/network/tcpserver.cpp.s
 .PHONY : network/tcpserver.cpp.s
 
+network/udpmanager.obj: network/udpmanager.cpp.obj
+.PHONY : network/udpmanager.obj
+
+# target to build an object file
+network/udpmanager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/network/udpmanager.cpp.obj
+.PHONY : network/udpmanager.cpp.obj
+
+network/udpmanager.i: network/udpmanager.cpp.i
+.PHONY : network/udpmanager.i
+
+# target to preprocess a source file
+network/udpmanager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/network/udpmanager.cpp.i
+.PHONY : network/udpmanager.cpp.i
+
+network/udpmanager.s: network/udpmanager.cpp.s
+.PHONY : network/udpmanager.s
+
+# target to generate assembly for a file
+network/udpmanager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/network/udpmanager.cpp.s
+.PHONY : network/udpmanager.cpp.s
+
 server_main.obj: server_main.cpp.obj
 .PHONY : server_main.obj
 
@@ -465,6 +489,9 @@ help:
 	@echo ... network/tcpserver.obj
 	@echo ... network/tcpserver.i
 	@echo ... network/tcpserver.s
+	@echo ... network/udpmanager.obj
+	@echo ... network/udpmanager.i
+	@echo ... network/udpmanager.s
 	@echo ... server_main.obj
 	@echo ... server_main.i
 	@echo ... server_main.s
