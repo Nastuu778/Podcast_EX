@@ -6,6 +6,26 @@ UdpManager::UdpManager(QObject *parent)
     : QObject(parent)
     , m_socket(new QUdpSocket(this))
 {
+    // Принимаем входящие UDP-пакеты (аудио от других)
+    connect(m_socket, &QUdpSocket::readyRead, this, [this]() {
+        while (m_socket->hasPendingDatagrams()) {
+            QByteArray data;
+            data.resize(static_cast<int>(m_socket->pendingDatagramSize()));
+            m_socket->readDatagram(data.data(), data.size());
+
+            // Извлекаем имя отправителя и звук
+            QDataStream stream(data);
+            stream.setVersion(QDataStream::Qt_6_0);
+
+            QString senderName;
+            QByteArray audio;
+            stream >> senderName >> audio;
+
+            if (!audio.isEmpty()) {
+                emit audioReceived(audio, senderName);
+            }
+        }
+    });
 }
 
 UdpManager::~UdpManager()
@@ -44,6 +64,7 @@ void UdpManager::setServerAddress(const QString &host, quint16 audioPort)
 {
     m_serverHost = host;
     m_serverAudioPort = audioPort;
+    qDebug() << "UDP server address set to" << host << ":" << audioPort;
 }
 
 void UdpManager::sendAudio(const QString &senderName, const QByteArray &audioData)

@@ -18,6 +18,15 @@ MainWindow::MainWindow(const QString &username,
     m_udpManager = new UdpManager(this);
     m_udpManager->bind();
 
+    // Создаём плеер для воспроизведения звука от других
+    m_audioPlayer = new AudioPlayer(this);
+
+    // Получаем аудио по UDP и воспроизводим
+    connect(m_udpManager, &UdpManager::audioReceived, this,
+            [this](const QByteArray &audio, const QString &senderName) {
+                m_audioPlayer->playChunk(audio);
+            });
+
     connect(m_client, &TcpClient::connected, this, &MainWindow::onClientConnected);
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
     connect(m_client, &TcpClient::errorOccurred, this, &MainWindow::onClientError);

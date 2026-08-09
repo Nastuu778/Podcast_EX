@@ -13,6 +13,7 @@
 #include <QSplitter>
 #include "network/udpmanager.h"
 #include "network/tcpclient.h"
+#include "audio/audioplayer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -39,6 +40,7 @@ private:
     void appendChatMessage(const QString &message);
     void sendRoleToServer();
 
+    AudioPlayer *m_audioPlayer;
     UdpManager *m_udpManager;
     TcpClient *m_client;
     QString m_username;

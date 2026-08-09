@@ -26,6 +26,15 @@ SpeakerWindow::SpeakerWindow(const QString &username,
     // Аудио-порт сервера = TCP-порт + 1
     m_udpManager->setServerAddress(m_host, static_cast<quint16>(m_port + 1));
 
+    // Создаём плеер для воспроизведения звука от других
+    m_audioPlayer = new AudioPlayer(this);
+
+    // Получаем аудио по UDP и воспроизводим
+    connect(m_udpManager, &UdpManager::audioReceived, this,
+            [this](const QByteArray &audio, const QString &senderName) {
+                m_audioPlayer->playChunk(audio);
+            });
+
     // Подключаем сигналы клиента
     connect(m_client, &TcpClient::connected, this, &SpeakerWindow::onClientConnected);
     connect(m_client, &TcpClient::disconnected, this, &SpeakerWindow::onClientDisconnected);

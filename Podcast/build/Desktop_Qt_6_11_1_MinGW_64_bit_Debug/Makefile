@@ -265,6 +265,30 @@ audio/audiomanager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audiomanager.cpp.s
 .PHONY : audio/audiomanager.cpp.s
 
+audio/audioplayer.obj: audio/audioplayer.cpp.obj
+.PHONY : audio/audioplayer.obj
+
+# target to build an object file
+audio/audioplayer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audioplayer.cpp.obj
+.PHONY : audio/audioplayer.cpp.obj
+
+audio/audioplayer.i: audio/audioplayer.cpp.i
+.PHONY : audio/audioplayer.i
+
+# target to preprocess a source file
+audio/audioplayer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audioplayer.cpp.i
+.PHONY : audio/audioplayer.cpp.i
+
+audio/audioplayer.s: audio/audioplayer.cpp.s
+.PHONY : audio/audioplayer.s
+
+# target to generate assembly for a file
+audio/audioplayer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/audio/audioplayer.cpp.s
+.PHONY : audio/audioplayer.cpp.s
+
 client_main.obj: client_main.cpp.obj
 .PHONY : client_main.obj
 
@@ -480,6 +504,9 @@ help:
 	@echo ... audio/audiomanager.obj
 	@echo ... audio/audiomanager.i
 	@echo ... audio/audiomanager.s
+	@echo ... audio/audioplayer.obj
+	@echo ... audio/audioplayer.i
+	@echo ... audio/audioplayer.s
 	@echo ... client_main.obj
 	@echo ... client_main.i
 	@echo ... client_main.s

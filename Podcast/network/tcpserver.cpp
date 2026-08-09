@@ -336,18 +336,33 @@ void TcpServer::onAudioReadyRead()
         quint16 senderPort = 0;
         m_audioSocket->readDatagram(data.data(), data.size(), &senderAddr, &senderPort);
 
-        // Извлекаем имя отправителя и аудио
+        // Нормализуем адрес отправителя
+        QString senderAddrStr = senderAddr.toString();
+        if (senderAddrStr.startsWith("::ffff:")) {
+            senderAddr = QHostAddress(senderAddrStr.mid(7));
+        }
+
+        // Извлекаем имя и звук для лога
         QDataStream stream(data);
         stream.setVersion(QDataStream::Qt_6_0);
-
         QString senderName;
         QByteArray audio;
         stream >> senderName >> audio;
 
-        qDebug() << "Received audio from" << senderName
-                 << "| size:" << audio.size()
-                 << "| from" << senderAddr.toString() << ":" << senderPort;
+        qDebug() << "Received audio from" << senderName << "| size:" << audio.size();
 
-        // TODO (Этап 3): пересылка всем, кроме отправителя
+        // Пересылаем всем клиентам, КРОМЕ отправителя
+        for (QTcpSocket *client : m_clients) {
+            if (!m_clientUdpAddresses.contains(client)) continue;
+
+            QPair<QHostAddress, quint16> udpAddr = m_clientUdpAddresses[client];
+
+            // Пропускаем отправителя (чтобы не слышал себя)
+            if (udpAddr.first == senderAddr && udpAddr.second == senderPort) {
+                continue;
+            }
+
+            m_audioSocket->writeDatagram(data, udpAddr.first, udpAddr.second);
+        }
     }
 }

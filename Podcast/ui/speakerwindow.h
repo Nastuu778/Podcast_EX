@@ -15,6 +15,7 @@
 #include "network/udpmanager.h"
 #include "audio/audiomanager.h"
 #include "network/tcpclient.h"
+#include "audio/audioplayer.h"
 
 class SpeakerWindow : public QMainWindow
 {
@@ -42,6 +43,7 @@ private:
     void appendChatMessage(const QString &message);
     void sendRoleToServer();
 
+    AudioPlayer *m_audioPlayer;
     TcpClient *m_client;
     UdpManager *m_udpManager;
     QString m_username;

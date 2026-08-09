@@ -12,14 +12,15 @@ public:
     explicit UdpManager(QObject *parent = nullptr);
     ~UdpManager();
 
-    bool bind();  // Создать UDP-сокет на свободном порту
-    quint16 localPort() const;  // Наш UDP-порт
+    bool bind();
+    quint16 localPort() const;
     bool isBound() const;
+
     void setServerAddress(const QString &host, quint16 audioPort);
     void sendAudio(const QString &senderName, const QByteArray &audioData);
 
 signals:
-    void audioReceived(const QByteArray &data, const QString &senderName);  // На будущее
+    void audioReceived(const QByteArray &data, const QString &senderName);
 
 private:
     QUdpSocket *m_socket;
