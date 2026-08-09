@@ -54,3 +54,10 @@ bool AudioPlayer::isReady() const
 {
     return m_ioDevice != nullptr;
 }
+
+void AudioPlayer::setVolume(qreal volume)
+{
+    if (m_audioSink) {
+        m_audioSink->setVolume(volume);
+    }
+}

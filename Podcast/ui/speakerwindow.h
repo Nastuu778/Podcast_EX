@@ -12,6 +12,8 @@
 #include <QGroupBox>
 #include <QProgressBar>
 #include <QComboBox>
+#include <QTimer>
+#include <QListWidgetItem>
 #include "network/udpmanager.h"
 #include "audio/audiomanager.h"
 #include "network/tcpclient.h"
@@ -42,10 +44,13 @@ private:
     void updateStatus(const QString &status);
     void appendChatMessage(const QString &message);
     void sendRoleToServer();
+    void highlightSpeaker(const QString &name);
+    void clearSpeakingHighlight();
 
     AudioPlayer *m_audioPlayer;
     TcpClient *m_client;
     UdpManager *m_udpManager;
+    QTimer *m_speakingTimer;
     QString m_username;
     QString m_host;
     quint16 m_port;

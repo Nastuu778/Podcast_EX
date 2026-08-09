@@ -25,7 +25,16 @@ MainWindow::MainWindow(const QString &username,
     connect(m_udpManager, &UdpManager::audioReceived, this,
             [this](const QByteArray &audio, const QString &senderName) {
                 m_audioPlayer->playChunk(audio);
+                highlightSpeaker(senderName);  // Подсвечиваем говорящего
             });
+
+    // Таймер для сброса подсветки, когда спикер замолкает
+    m_speakingTimer = new QTimer(this);
+    m_speakingTimer->setSingleShot(true);
+    m_speakingTimer->setInterval(400);  // 0.4 секунды
+    connect(m_speakingTimer, &QTimer::timeout, this, [this]() {
+        clearSpeakingHighlight();
+    });
 
     connect(m_client, &TcpClient::connected, this, &MainWindow::onClientConnected);
     connect(m_client, &TcpClient::disconnected, this, &MainWindow::onClientDisconnected);
@@ -92,6 +101,21 @@ void MainWindow::setupUI()
     statusLayout->addWidget(m_statusLabel);
 
     rightLayout->addLayout(statusLayout);
+
+    // === Регулятор громкости (только у слушателей) ===
+    QHBoxLayout *volumeLayout = new QHBoxLayout();
+    volumeLayout->addWidget(new QLabel("Громкость:"));
+
+    m_volumeSlider = new QSlider(Qt::Horizontal);
+    m_volumeSlider->setRange(0, 100);
+    m_volumeSlider->setValue(100);
+    volumeLayout->addWidget(m_volumeSlider);
+
+    rightLayout->addLayout(volumeLayout);
+
+    connect(m_volumeSlider, &QSlider::valueChanged, this, [this](int value) {
+        m_audioPlayer->setVolume(value / 100.0);
+    });
 
     // Область чата
     m_chatDisplay = new QTextEdit();
@@ -246,4 +270,38 @@ void MainWindow::sendRoleToServer()
 {
     QString message = QString("/join:%1:listener").arg(m_username);
     m_client->sendTextMessage(message);
+}
+
+void MainWindow::highlightSpeaker(const QString &name)
+{
+    for (int i = 0; i < m_speakersList->count(); ++i) {
+        QListWidgetItem *item = m_speakersList->item(i);
+
+        if (item->text() == name && m_speakersList->itemWidget(item) == nullptr) {
+            item->setData(Qt::UserRole, name);  // Запоминаем имя
+            item->setText(QString());           // Скрываем текст элемента
+
+            QLabel *label = new QLabel(name);
+            label->setStyleSheet(
+                "border: 2px solid #4CAF50;"
+                "border-radius: 4px;"
+                "padding: 4px;"
+                "color: white;"
+                );
+            m_speakersList->setItemWidget(item, label);
+        }
+    }
+    m_speakingTimer->start();
+}
+
+void MainWindow::clearSpeakingHighlight()
+{
+    for (int i = 0; i < m_speakersList->count(); ++i) {
+        QListWidgetItem *item = m_speakersList->item(i);
+        if (m_speakersList->itemWidget(item) != nullptr) {
+            QString savedName = item->data(Qt::UserRole).toString();
+            m_speakersList->removeItemWidget(item);
+            item->setText(savedName);  // Возвращаем имя
+        }
+    }
 }

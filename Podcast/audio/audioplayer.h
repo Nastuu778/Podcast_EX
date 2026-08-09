@@ -18,6 +18,7 @@ public:
 
     void playChunk(const QByteArray &data);
     bool isReady() const;
+    void setVolume(qreal volume);  // Громкость от 0.0 до 1.0
 
 private:
     QAudioSink *m_audioSink = nullptr;
