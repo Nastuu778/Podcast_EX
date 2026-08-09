@@ -4,6 +4,7 @@
 
 TcpServer::TcpServer(QObject *parent)
     : QTcpServer(parent)
+    , m_audioSocket(nullptr)
 {
 }
 
@@ -16,6 +17,14 @@ bool TcpServer::start(quint16 port)
 {
     if (listen(QHostAddress::Any, port)) {
         qDebug() << "Server started on port" << port;
+        // UDP-сокет для приёма аудио на порту (port + 1)
+        m_audioSocket = new QUdpSocket(this);
+        if (m_audioSocket->bind(QHostAddress::Any, port + 1)) {
+            qDebug() << "Audio UDP socket bound to port" << (port + 1);
+            connect(m_audioSocket, &QUdpSocket::readyRead, this, &TcpServer::onAudioReadyRead);
+        } else {
+            qDebug() << "Failed to bind audio UDP socket:" << m_audioSocket->errorString();
+        }
         return true;
     } else {
         qDebug() << "Failed to start server:" << errorString();
@@ -35,6 +44,11 @@ void TcpServer::stop()
     m_clientUdpAddresses.clear();
     m_messageHistory.clear();
     QTcpServer::close();
+    if (m_audioSocket) {
+        m_audioSocket->close();
+        delete m_audioSocket;
+        m_audioSocket = nullptr;
+    }
     qDebug() << "Server stopped";
 }
 
@@ -309,5 +323,31 @@ void TcpServer::broadcastMessage(const QString &message, QTcpSocket *sender)
             client->write(data);
             client->flush();
         }
+    }
+}
+
+void TcpServer::onAudioReadyRead()
+{
+    while (m_audioSocket->hasPendingDatagrams()) {
+        QByteArray data;
+        data.resize(static_cast<int>(m_audioSocket->pendingDatagramSize()));
+
+        QHostAddress senderAddr;
+        quint16 senderPort = 0;
+        m_audioSocket->readDatagram(data.data(), data.size(), &senderAddr, &senderPort);
+
+        // Извлекаем имя отправителя и аудио
+        QDataStream stream(data);
+        stream.setVersion(QDataStream::Qt_6_0);
+
+        QString senderName;
+        QByteArray audio;
+        stream >> senderName >> audio;
+
+        qDebug() << "Received audio from" << senderName
+                 << "| size:" << audio.size()
+                 << "| from" << senderAddr.toString() << ":" << senderPort;
+
+        // TODO (Этап 3): пересылка всем, кроме отправителя
     }
 }

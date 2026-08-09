@@ -13,15 +13,18 @@ SpeakerWindow::SpeakerWindow(const QString &username,
 {
     setupUI();
 
-    // Создаём UDP-менеджер и занимаем порт
-    m_udpManager = new UdpManager(this);
-    m_udpManager->bind();
-
     // Создаём менеджер аудио
     m_audioManager = new AudioManager(this);
 
     // Заполняем список микрофонов
     m_micComboBox->addItems(m_audioManager->availableMicrophones());
+
+    // Создаём UDP-менеджер и занимаем порт
+    m_udpManager = new UdpManager(this);
+    m_udpManager->bind();
+
+    // Аудио-порт сервера = TCP-порт + 1
+    m_udpManager->setServerAddress(m_host, static_cast<quint16>(m_port + 1));
 
     // Подключаем сигналы клиента
     connect(m_client, &TcpClient::connected, this, &SpeakerWindow::onClientConnected);
@@ -35,6 +38,13 @@ SpeakerWindow::SpeakerWindow(const QString &username,
         m_micStatusLabel->setText("Ошибка: " + error);
         m_micStatusLabel->setStyleSheet("color: red;");
         m_micButton->setChecked(false);
+    });
+
+    // Когда микрофон захватывает звук - отправляем его на сервер
+    connect(m_audioManager, &AudioManager::audioDataReady, this, [this](const QByteArray &data) {
+        if (m_micButton->isChecked()) {
+            m_udpManager->sendAudio(m_username, data);
+        }
     });
 
     m_client->connectToServer(m_host, m_port);

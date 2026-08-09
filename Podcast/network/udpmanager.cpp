@@ -1,5 +1,6 @@
 #include "udpmanager.h"
 #include <QDebug>
+#include <QDataStream>
 
 UdpManager::UdpManager(QObject *parent)
     : QObject(parent)
@@ -37,4 +38,23 @@ quint16 UdpManager::localPort() const
 bool UdpManager::isBound() const
 {
     return m_socket->state() == QAbstractSocket::BoundState;
+}
+
+void UdpManager::setServerAddress(const QString &host, quint16 audioPort)
+{
+    m_serverHost = host;
+    m_serverAudioPort = audioPort;
+}
+
+void UdpManager::sendAudio(const QString &senderName, const QByteArray &audioData)
+{
+    if (m_serverAudioPort == 0) return;
+
+    // Формат пакета: имя отправителя + аудио-данные
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream.setVersion(QDataStream::Qt_6_0);
+    stream << senderName << audioData;
+
+    m_socket->writeDatagram(data, QHostAddress(m_serverHost), m_serverAudioPort);
 }

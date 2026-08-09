@@ -7,6 +7,7 @@
 #include <QTcpSocket>
 #include <QList>
 #include <QMap>
+#include <QUdpSocket>
 
 class TcpServer : public QTcpServer
 {
@@ -29,6 +30,7 @@ protected:
 
 private slots:
     void onClientReadyRead();
+    void onAudioReadyRead();
 
 private:
     void broadcastMessage(const QString &message, QTcpSocket *sender);
@@ -39,6 +41,7 @@ private:
     void handleUdpPort(QTcpSocket *client, const QString &message);
     int countClientsByRole(const QString &role);
     QString getClientUsername(QTcpSocket *client);  // НОВОЕ
+    QUdpSocket *m_audioSocket;
 
     QMap<QTcpSocket*, QPair<QHostAddress, quint16>> m_clientUdpAddresses;
     QList<QTcpSocket*> m_clients;
