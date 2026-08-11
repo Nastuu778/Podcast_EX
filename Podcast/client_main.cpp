@@ -3,11 +3,14 @@
 #include "ui/roledialog.h"
 #include "ui/mainwindow.h"
 #include "ui/speakerwindow.h"
+#include "ui/styles.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("Podcast Client");
+
+    app.setStyleSheet(Styles::applicationStyle());
 
     RoleDialog roleDialog;
     if (roleDialog.exec() == QDialog::Accepted) {

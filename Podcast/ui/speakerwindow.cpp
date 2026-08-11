@@ -125,7 +125,7 @@ void SpeakerWindow::setupUI()
     m_micButton->setCheckable(true);
     m_micButton->setEnabled(false);  // Пока нет подключения
     m_micButton->setStyleSheet(
-        "QPushButton { background-color: #e0e0e0; padding: 10px; font-weight: bold; }"
+        "QPushButton { background-color: #e0e0e0; color: #1e1e2b; padding: 10px; font-weight: bold; }"
         "QPushButton:checked { background-color: #4CAF50; color: white; }"
         );
     micLayout->addWidget(m_micButton);

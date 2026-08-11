@@ -44,6 +44,8 @@ add_executable(PodcastClient
     network/udpmanager.cpp
     audio/audioplayer.h
     audio/audioplayer.cpp
+    ui/styles.h
+    ui/styles.cpp
 )
 
 target_include_directories(PodcastClient PRIVATE ${CMAKE_SOURCE_DIR})

@@ -481,6 +481,30 @@ ui/speakerwindow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/speakerwindow.cpp.s
 .PHONY : ui/speakerwindow.cpp.s
 
+ui/styles.obj: ui/styles.cpp.obj
+.PHONY : ui/styles.obj
+
+# target to build an object file
+ui/styles.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/styles.cpp.obj
+.PHONY : ui/styles.cpp.obj
+
+ui/styles.i: ui/styles.cpp.i
+.PHONY : ui/styles.i
+
+# target to preprocess a source file
+ui/styles.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/styles.cpp.i
+.PHONY : ui/styles.cpp.i
+
+ui/styles.s: ui/styles.cpp.s
+.PHONY : ui/styles.s
+
+# target to generate assembly for a file
+ui/styles.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PodcastClient.dir\build.make CMakeFiles/PodcastClient.dir/ui/styles.cpp.s
+.PHONY : ui/styles.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -531,6 +555,9 @@ help:
 	@echo ... ui/speakerwindow.obj
 	@echo ... ui/speakerwindow.i
 	@echo ... ui/speakerwindow.s
+	@echo ... ui/styles.obj
+	@echo ... ui/styles.i
+	@echo ... ui/styles.s
 .PHONY : help
 
 
