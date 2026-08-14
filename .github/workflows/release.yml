@@ -47,16 +47,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install system dependencies
+      - name: Install Qt and build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libegl1-mesa-dev
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: '6.7.3'
-          modules: 'qtmultimedia'
+          sudo apt-get install -y build-essential cmake \
+            qt6-base-dev qtmultimedia6-dev libqt6multimedia6-plugins \
+            libgl1-mesa-dev libxkbcommon-dev libegl1-mesa-dev
 
       - name: Configure
         run: cmake -S Podcast -B build -DCMAKE_BUILD_TYPE=Release
@@ -66,36 +62,35 @@ jobs:
 
       - name: Package Linux
         run: |
-          QT_ROOT=$(dirname $(dirname "$(which qmake)"))
-          echo "Qt root: $QT_ROOT"
+          L=/usr/lib/x86_64-linux-gnu
           mkdir -p stage/lib stage/plugins
           cp build/PodcastClient build/PodcastServer stage/
 
-          # Qt-библиотеки (|| true = пропустить, если файла нет)
-          cp -P $QT_ROOT/lib/libQt6Core.so*       stage/lib/ || true
-          cp -P $QT_ROOT/lib/libQt6Gui.so*        stage/lib/ || true
-          cp -P $QT_ROOT/lib/libQt6Widgets.so*    stage/lib/ || true
-          cp -P $QT_ROOT/lib/libQt6Network.so*    stage/lib/ || true
-          cp -P $QT_ROOT/lib/libQt6Multimedia.so* stage/lib/ || true
-          cp -P $QT_ROOT/lib/libQt6DBus.so*       stage/lib/ || true
-          cp -P $QT_ROOT/lib/libQt6XcbQpa.so*     stage/lib/ || true
-          cp -P $QT_ROOT/lib/libav*.so*           stage/lib/ || true
+          # Qt-библиотеки (из системы - версии совпадают с ICU)
+          cp -P $L/libQt6Core.so*       stage/lib/ || true
+          cp -P $L/libQt6Gui.so*        stage/lib/ || true
+          cp -P $L/libQt6Widgets.so*    stage/lib/ || true
+          cp -P $L/libQt6Network.so*    stage/lib/ || true
+          cp -P $L/libQt6Multimedia.so* stage/lib/ || true
+          cp -P $L/libQt6DBus.so*       stage/lib/ || true
+          cp -P $L/libQt6XcbQpa.so*     stage/lib/ || true
+          cp -P $L/libQt6OpenGL.so*     stage/lib/ || true
 
-          # Системные библиотеки
-          cp -P /usr/lib/x86_64-linux-gnu/libicui18n.so*   stage/lib/ || true
-          cp -P /usr/lib/x86_64-linux-gnu/libicuuc.so*     stage/lib/ || true
-          cp -P /usr/lib/x86_64-linux-gnu/libicudata.so*   stage/lib/ || true
-          cp -P /usr/lib/x86_64-linux-gnu/libstdc++.so.6*  stage/lib/ || true
-          cp -P /usr/lib/x86_64-linux-gnu/libgcc_s.so.1    stage/lib/ || true
-          cp -P /usr/lib/x86_64-linux-gnu/libdouble-conversion.so* stage/lib/ || true
-          cp -P /usr/lib/x86_64-linux-gnu/libpcre2-16.so*  stage/lib/ || true
+          # Системные зависимости Qt (та же версия, что и Qt)
+          cp -P $L/libicui18n.so*   stage/lib/ || true
+          cp -P $L/libicuuc.so*     stage/lib/ || true
+          cp -P $L/libicudata.so*   stage/lib/ || true
+          cp -P $L/libdouble-conversion.so* stage/lib/ || true
+          cp -P $L/libpcre2-16.so*  stage/lib/ || true
+          cp -P $L/libstdc++.so.6*  stage/lib/ || true
+          cp -P $L/libgcc_s.so.1    stage/lib/ || true
 
-          # Плагины Qt
-          cp -rP $QT_ROOT/plugins/platforms    stage/plugins/ || true
-          cp -rP $QT_ROOT/plugins/imageformats stage/plugins/ || true
-          cp -rP $QT_ROOT/plugins/iconengines  stage/plugins/ || true
-          cp -rP $QT_ROOT/plugins/styles       stage/plugins/ || true
-          cp -rP $QT_ROOT/plugins/multimedia   stage/plugins/ || true
+          # Плагины Qt (включая звук: pulse/alsa)
+          cp -rP $L/qt6/plugins/platforms    stage/plugins/ || true
+          cp -rP $L/qt6/plugins/imageformats stage/plugins/ || true
+          cp -rP $L/qt6/plugins/iconengines  stage/plugins/ || true
+          cp -rP $L/qt6/plugins/styles       stage/plugins/ || true
+          cp -rP $L/qt6/plugins/multimedia   stage/plugins/ || true
 
           # Скрипты запуска
           printf '#!/bin/bash\nDIR="$(cd "$(dirname "$0")" && pwd)"\nexport LD_LIBRARY_PATH="$DIR/lib:$LD_LIBRARY_PATH"\nexport QT_PLUGIN_PATH="$DIR/plugins"\nexec "$DIR/PodcastClient" "$@"\n' > stage/run_client.sh
