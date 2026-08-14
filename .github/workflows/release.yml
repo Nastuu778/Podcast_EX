@@ -71,17 +71,17 @@ jobs:
           mkdir -p stage/lib stage/plugins
           cp build/PodcastClient build/PodcastServer stage/
 
-          # Qt-библиотеки
-          cp -P $QT_ROOT/lib/libQt6Core.so*       stage/lib/
-          cp -P $QT_ROOT/lib/libQt6Gui.so*        stage/lib/
-          cp -P $QT_ROOT/lib/libQt6Widgets.so*    stage/lib/
-          cp -P $QT_ROOT/lib/libQt6Network.so*    stage/lib/
-          cp -P $QT_ROOT/lib/libQt6Multimedia.so* stage/lib/
+          # Qt-библиотеки (|| true = пропустить, если файла нет)
+          cp -P $QT_ROOT/lib/libQt6Core.so*       stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Gui.so*        stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Widgets.so*    stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Network.so*    stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Multimedia.so* stage/lib/ || true
           cp -P $QT_ROOT/lib/libQt6DBus.so*       stage/lib/ || true
           cp -P $QT_ROOT/lib/libQt6XcbQpa.so*     stage/lib/ || true
           cp -P $QT_ROOT/lib/libav*.so*           stage/lib/ || true
 
-          # Системные библиотеки (Qt от них зависит)
+          # Системные библиотеки
           cp -P /usr/lib/x86_64-linux-gnu/libicui18n.so*   stage/lib/ || true
           cp -P /usr/lib/x86_64-linux-gnu/libicuuc.so*     stage/lib/ || true
           cp -P /usr/lib/x86_64-linux-gnu/libicudata.so*   stage/lib/ || true
@@ -91,11 +91,11 @@ jobs:
           cp -P /usr/lib/x86_64-linux-gnu/libpcre2-16.so*  stage/lib/ || true
 
           # Плагины Qt
-          cp -rP $QT_ROOT/plugins/platforms    stage/plugins/
-          cp -rP $QT_ROOT/plugins/imageformats stage/plugins/
-          cp -rP $QT_ROOT/plugins/iconengines  stage/plugins/
-          cp -rP $QT_ROOT/plugins/styles       stage/plugins/
-          cp -rP $QT_ROOT/plugins/multimedia   stage/plugins/
+          cp -rP $QT_ROOT/plugins/platforms    stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/imageformats stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/iconengines  stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/styles       stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/multimedia   stage/plugins/ || true
 
           # Скрипты запуска
           printf '#!/bin/bash\nDIR="$(cd "$(dirname "$0")" && pwd)"\nexport LD_LIBRARY_PATH="$DIR/lib:$LD_LIBRARY_PATH"\nexport QT_PLUGIN_PATH="$DIR/plugins"\nexec "$DIR/PodcastClient" "$@"\n' > stage/run_client.sh
