@@ -1,2 +1,1 @@
-build/
-.qtcreator/
+"build-*\n*.user\n*.autosave\n.qmake.stash\nMakefile" 
