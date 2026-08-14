@@ -1,1 +1,7 @@
-"build-*\n*.user\n*.autosave\n.qmake.stash\nMakefile" 
+# Qt build
+build/
+build-*/
+*.user
+*.autosave
+.qmake.stash
+Makefile 
