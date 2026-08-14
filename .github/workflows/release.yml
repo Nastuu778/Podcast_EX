@@ -66,8 +66,31 @@ jobs:
 
       - name: Package Linux
         run: |
-          mkdir stage
+          QT_ROOT=$(dirname $(dirname $(dirname "$Qt6_DIR")))
+          mkdir -p stage/lib stage/plugins
           cp build/PodcastClient build/PodcastServer stage/
+
+          # Пакуем Qt-библиотеки
+          cp -P $QT_ROOT/lib/libQt6Core.so*       stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Gui.so*        stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Widgets.so*    stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Network.so*    stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6Multimedia.so* stage/lib/ || true
+          cp -P $QT_ROOT/lib/libQt6DBus.so*       stage/lib/ || true
+          cp -P $QT_ROOT/lib/libav*.so*           stage/lib/ || true
+
+          # Пакуем плагины Qt
+          cp -rP $QT_ROOT/plugins/platforms    stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/imageformats stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/iconengines  stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/styles       stage/plugins/ || true
+          cp -rP $QT_ROOT/plugins/multimedia   stage/plugins/ || true
+
+          # Скрипты запуска (подставляют библиотеки из папки lib)
+          printf '#!/bin/bash\nDIR="$(cd "$(dirname "$0")" && pwd)"\nexport LD_LIBRARY_PATH="$DIR/lib:$LD_LIBRARY_PATH"\nexport QT_PLUGIN_PATH="$DIR/plugins"\nexec "$DIR/PodcastClient" "$@"\n' > stage/run_client.sh
+          printf '#!/bin/bash\nDIR="$(cd "$(dirname "$0")" && pwd)"\nexport LD_LIBRARY_PATH="$DIR/lib:$LD_LIBRARY_PATH"\nexec "$DIR/PodcastServer" "$@"\n' > stage/run_server.sh
+          chmod +x stage/run_client.sh stage/run_server.sh
+
           tar -czf Podcast-linux-x64.tar.gz -C stage .
 
       - uses: actions/upload-artifact@v4
