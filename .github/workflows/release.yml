@@ -8,37 +8,38 @@ permissions:
   contents: write
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
+build-windows:
+  runs-on: windows-latest
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: '6.7.3'
-          modules: 'qtmultimedia'
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.7.3'
+        arch: win64_msvc2019_64
+        modules: 'qtmultimedia'
 
-      - name: Configure
-        run: cmake -S Podcast -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+    - name: Configure
+      run: cmake -S Podcast -B build -DCMAKE_BUILD_TYPE=Release
 
-      - name: Build
-        run: cmake --build build --parallel
+    - name: Build
+      run: cmake --build build --config Release --parallel
 
-      - name: Package Windows
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Path stage
-          Copy-Item build/PodcastClient.exe stage/
-          Copy-Item build/PodcastServer.exe stage/
-          windeployqt stage/PodcastClient.exe
-          windeployqt stage/PodcastServer.exe
-          Compress-Archive -Path stage/* -DestinationPath Podcast-win-x64.zip
+    - name: Package Windows
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Path stage
+        Copy-Item build/Release/PodcastClient.exe stage/
+        Copy-Item build/Release/PodcastServer.exe stage/
+        windeployqt stage/PodcastClient.exe
+        windeployqt stage/PodcastServer.exe
+        Compress-Archive -Path stage/* -DestinationPath Podcast-win-x64.zip
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: win-build
-          path: Podcast-win-x64.zip
+    - uses: actions/upload-artifact@v4
+      with:
+        name: win-build
+        path: Podcast-win-x64.zip
 
   build-linux:
     runs-on: ubuntu-latest
